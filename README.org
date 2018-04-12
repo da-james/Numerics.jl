@@ -1,0 +1,3 @@
+* Introduction
+This is a combination of numerical methods that I am programming.
+Most of them will be done in Python.
