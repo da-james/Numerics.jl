@@ -1,12 +1,12 @@
 import math as ma
 
 def f(x):
-    return ma.exp(x)+(2**(-x))+(2*ma.cos(x))-6;
+    return 4*x**3 + 2*x - 2;
 
 def fprime(x):
-    return ma.exp(x)-(2**(-x)*ma.log(2))-(2*ma.sin(x));
+    return 12*x**2 + 2;
 
-def newton(error,left,right):
+def newton(error,left):
     # Intial Values
     n = 0;
     p = left;
@@ -67,11 +67,11 @@ def secant(error,left,right,pZero,pOne):
 
 
 print("The Newton Iteration will try to find a zero of a function.");
-error = .00001;
+error = .0001;
 leftB = 1;
-rightB = 2;
+# rightB = 1;
 
-newton(error,leftB,rightB);
-print("****************************************")
-print("The Secant Iteration will now also try to find a zero of the function.")
-secant(error,leftB,rightB,1,1.5)
+newton(error,leftB);
+# print("****************************************")
+# print("The Secant Iteration will now also try to find a zero of the function.")
+# secant(error,leftB,rightB,1,1.5)
