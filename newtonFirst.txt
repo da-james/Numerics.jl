@@ -71,3 +71,13 @@ Error:  0.0002674479459074952
 Step: 5
 p = 0.589754512301466
 Error: 8.201911083638436e-08
+The Newton Iteration will try to find a zero of a function.
+Step: 0
+p = 2
+Error:  0.0
+Step: 1
+p = 1.8666666666666667
+Error:  0.1333333333333333
+Step: 2
+p = 1.8667603990088844
+Error: 9.373234221765614e-05
