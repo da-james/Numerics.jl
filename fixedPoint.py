@@ -1,4 +1,5 @@
 import math as ma
+# hello
 
 def g(x):
     return .5*(3/x + x);
