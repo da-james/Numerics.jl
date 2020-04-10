@@ -13,32 +13,36 @@ contains
     !======================================================================
     !
     ! function fdm: Finite Difference Method
-    ! This will solve out a 2nd order DE using the
-    ! Finite Difference approach
+    ! This will solve out a 2nd order DE using the Finite Difference
+    ! approach.
+    ! Let D = d/dx then the equation should have the form
+    ! p*(D^2)y + q*D(y) + y = g(x)
     !
     !======================================================================
-    integer, parameter :: m = n - 2
     real :: s1, s2, s3
-    real, dimension(m) :: L, D, U, f_b
-    integer :: i
-
+    real, dimension(:), allocatable :: L, D, U, f_b
+    integer :: i, m
 
     s1 = 1/h**2 - v(1)/(2*h)
     s2 = v(2) - 2/h**2
     s3 = 1/h**2 + v(1)/(2*h)
 
+    m = n - 2
+    allocate(L(m),D(m),U(m),f_b(m))
     L(:) = s1
     D(:) = s2
     U(:) = s3
 
-    do i=1,n-2
-       call f(x(i),f_b(i))
+    do i=1,m
+       call f(x(i+1),f_b(i))
     enddo
     f_b(1) = f_b(1) - s1*y0(1)
-    f_b(n) = f_b(n) - s3*y0(2)
+    f_b(m) = f_b(n) - s3*y0(2)
 
-    call tridiag(n,L,D,U,f_b,y)
+    call tridiag(m,L,D,U,f_b,y)
+    y(1) = y0(1)
     y(2:) = f_b
+    y(n) = y0(2)
 
   end subroutine fdm
 
@@ -53,16 +57,16 @@ contains
     ! matrix made up of U, D, and L, the upper diagonal, diagonal, and lower
     ! diagonal, respectively.
     ! @param:
-    ! n - int, intent(in); size of the diagonal of the matrix
-    ! L - real, intent(inout), dimension(n-1): lower diagonal of the matrix
-    ! D - real, intent(inout), dimension(n): diagonal of the matrix
-    ! U - real, inout, dimension(n-1): upper diagonal of the matrix
-    ! x - real, inout, dim(n): variables for system
-    ! b - real, inout, dim(n): constant terms
+    ! jmx -  int,    in          : size of the diagonal of the matrix
+    !   a - real, inout, dim(jmx): lower diagonal
+    !   b - real, inout, dim(jmx): diagonal
+    !   c - real, inout, dim(jmx): upper diagonal
+    !   f - real, inout, dim(jmx): constant terms
+    !   q - real, inout, dim(jmx): working array
     !
     !======================================================================
-    real :: p
-    integer :: j
+    real :: p       ! working variable for performing algorithm
+    integer :: j    ! index variable for loop
 
     c(jmx) = 0
 
