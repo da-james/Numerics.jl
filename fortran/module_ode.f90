@@ -16,7 +16,17 @@ contains
     ! This will solve out a 2nd order DE using the Finite Difference
     ! approach.
     ! Let D = d/dx then the equation should have the form
-    ! p*(D^2)y + q*D(y) + y = g(x)
+    ! (D^2)y + p*D(y) + q*y = f(x) where p,q are constants and f(x) is a
+    ! function, and y(t0) = y0 and y(t1) = y1 such that t0 <= t <= t1.
+    ! @param:
+    !  f -  sub, external, (x,y): f(x) evaluates values and returns y
+    !  v - real, in, dim(2)     : p, q as v(1) and v(2), respectively
+    !  t - real, in, dim(2)     : t0, t1 as t(1) and t(2), respectively
+    ! y0 - real, in, dim(2)     : y0, y1 as y0(1) and y0(2), respectively
+    !  n -  int, in             : number of steps in t0 <= t <= t1
+    !  h - real, in             : step size
+    !  x - real, out, dim(n)    : x elements along t0 <= t <= t1
+    !  y - real, out, dim(n)    : y elements evaluated on t0 <= t <= t1
     !
     !======================================================================
     real :: s1, s2, s3
