@@ -1,8 +1,8 @@
 program main
+  use module_values, only : PI
   use module_ode
   implicit none
 
-  real, parameter :: PI = 4.0*atan(1.0)
   real, dimension(2) :: v,t,y0
   real, dimension(:), allocatable :: x,y
   real :: h
