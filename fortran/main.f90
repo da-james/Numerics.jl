@@ -1,6 +1,7 @@
 program main
   use module_values, only : PI
   use module_ode
+  use module_interpolate
   implicit none
 
   real, dimension(2) :: v,t,y0

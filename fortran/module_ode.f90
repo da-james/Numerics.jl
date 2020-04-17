@@ -11,11 +11,8 @@
 ! - subroutine fdm: Finite Difference Method (3)
 !==============================================================================
 module module_ode
-  use module_values, only : dp, i16
+  use module_values, only : dp, i16, NMAX, NSTPMX
   implicit none
-
-  integer(i16), parameter :: NMAX = 10
-  integer(i16), parameter :: NSTPMX = 500
 
 contains
 
@@ -27,7 +24,7 @@ contains
     real(dp), dimension(NSTPMX), intent(out) :: xx
     real(dp), dimension(NMAX,NSTPMX), intent(out) :: y
     external :: derivs
-    !==========================================================================
+    !--------------------------------------------------------------------------
     !
     ! subroutine rkdriver: driver for rk4 (1)
     ! A driver routine to run the rk4 sequentionally.
@@ -46,7 +43,7 @@ contains
     !   xx - real, array(size:NSTPMX), output steps
     !   y - real, array(r:NMAX,c:NSTPMX), output values
     !
-    !==========================================================================
+    !--------------------------------------------------------------------------
     integer(i16) :: i,k
     real(dp) :: h, x
     real(dp), dimension(NMAX) :: dv, v
@@ -79,7 +76,7 @@ contains
     real(dp), dimension(n), intent(in) :: dydx, y
     real(dp), dimension(n), intent(out) :: yout
     external :: derivs
-    !=========================================================================
+    !-------------------------------------------------------------------------
     !
     ! subroutine rk4: 4th-Order Runge-Kutta Method (1)
     ! This will solve out an ode numerically. Refer to
@@ -97,7 +94,7 @@ contains
     !          v - real, array, size of NMAX, input conditions
     !          dv - real, array, size of NMAX, output values)
     !
-    !=========================================================================
+    !-------------------------------------------------------------------------
     integer(i16) :: i
     real(dp), dimension(NMAX) :: dym, dyt, yt
     real(dp) :: h6, hh, xh
@@ -137,7 +134,7 @@ contains
     real, dimension(2), intent(in) :: v, t ,y0
     real, dimension(n), intent(out) :: x, y
     external :: f
-    !======================================================================
+    !-------------------------------------------------------------------------
     !
     ! subroutine fdm: Finite Difference Method (3)
     ! This will solve out a 2nd order DE using the Finite Difference
@@ -155,7 +152,7 @@ contains
     !  x - real, out, dim(n)    : x elements along t0 <= t <= t1
     !  y - real, out, dim(n)    : y elements evaluated on t0 <= t <= t1
     !
-    !======================================================================
+    !-------------------------------------------------------------------------
     real :: s1, s2, s3
     real, dimension(:), allocatable :: L, D, U, f_b
     integer :: i, m
@@ -186,7 +183,7 @@ contains
   subroutine tridiag(jmx,a,b,c,f,q)
     integer, intent(in) :: jmx
     real, dimension(jmx), intent(inout) :: a, b, c, f, q
-    !======================================================================
+    !-------------------------------------------------------------------------
     !
     ! subroutine tridiag: Thomas Algorithm
     ! This subroutine will solve out a tridiagonal matrix system of equations
@@ -201,7 +198,7 @@ contains
     !   f - real, inout, dim(jmx): constant terms
     !   q - real, inout, dim(jmx): working array
     !
-    !======================================================================
+    !-------------------------------------------------------------------------
     real :: p       ! working variable for performing algorithm
     integer :: j    ! index variable for loop
 

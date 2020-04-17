@@ -1,27 +1,32 @@
 module module_interpolate
-  use module_values, only : dp
+  use module_values, only : dp, i16, NMAX, NSTPMX
   implicit none
 
-  contains
-  !==================================================
-  ! subroutine polint: polynomial interpolation
-  ! Will interpolate values to a nth order polynomial.
-  ! Refer to Numerical Recipes(pg. 103-104) for
-  ! information about the subroutine.
-  ! @param:
-  !   xa - real, array, x values of function
-  !   ya - real, array, y values of function
-  !   n - int, size of array
-  !   x - real, initial x value
-  !   y - real, correlated y
-  !   dy - real, error estimate
-  !==================================================
+contains
+
   subroutine polint(xa,ya,n,x,y,dy)
-    integer(kind=4), intent(in) ::  n
-    real(kind=ikind), intent(in) :: xa(n), ya(n), x
-    real(kind=ikind), intent(out) :: y, dy
-    integer(kind=4) i, m, ns
-    real(kind=ikind) den, dif, dift, ho, hp, w, c(NMAX), d(NMAX)
+    integer(i16), intent(in) ::  n
+    real(dp), intent(in) :: x
+    real(dp), dimension(n), intent(in) :: xa, ya
+    real(dp), intent(out) :: y, dy
+    !--------------------------------------------------------------------------
+    !
+    ! subroutine polint: polynomial interpolation
+    ! Will interpolate values to a nth order polynomial.
+    ! Refer to Numerical Recipes(pg. 103-104) for
+    ! information about the subroutine.
+    ! @param:
+    !   xa - real, array, x values of function
+    !   ya - real, array, y values of function
+    !   n - int, size of array
+    !   x - real, initial x value
+    !   y - real, correlated y
+    !   dy - real, error estimate
+    !
+    !--------------------------------------------------------------------------
+    integer(i16) :: i, m, ns
+    real(dp) :: den, dif, dift, ho, hp, w
+    real(dp), dimension(NMAX) :: c, d
 
     ns = 1
     dif = abs(x-xa(1))
@@ -68,24 +73,27 @@ module module_interpolate
     end do
   end subroutine polint
 
-  !==================================================
-  ! subroutine hunt: index finder
-  ! Will find the index of the desired x value given
-  ! in an array
-  ! Refer to Numerical Recipes(pg. 112-113) for
-  ! information about the subroutine.
-  ! @param:
-  !   xx - real, array, x values of function
-  !   n - int, size of array
-  !   x - real, initial x value
-  !   jlo - int, index of x such that x is between
-  !              xx(jlo) and xx(jlo+1)
-  !==================================================
   subroutine hunt(xx,n,x,jlo)
-    integer(kind=4), intent(in) :: n
-    real(kind=ikind), intent(in) :: x, xx(n)
-    integer(kind=4), intent(out) :: jlo
-    integer(kind=4) :: inc, jhi, jm
+    integer(i16), intent(in) :: n
+    real(dp), dimension(n), intent(in) :: xx
+    real(dp), intent(in) :: x
+    integer(i16), intent(out) :: jlo
+    !-------------------------------------------------------------------------
+    !
+    ! subroutine hunt: index finder
+    ! Will find the index of the desired x value given
+    ! in an array
+    ! Refer to Numerical Recipes(pg. 112-113) for
+    ! information about the subroutine.
+    ! @param:
+    !   xx - real, array, x values of function
+    !   n - int, size of array
+    !   x - real, initial x value
+    !   jlo - int, index of x such that x is between
+    !              xx(jlo) and xx(jlo+1)
+    !
+    !-------------------------------------------------------------------------
+    integer(i16) :: inc, jhi, jm
     logical :: ascnd
 
     ! True if ascendinf order of table,
@@ -146,21 +154,22 @@ module module_interpolate
     goto 3
   end subroutine hunt
 
-  !==================================================
-  ! function smallerIndex: Array Shortener
-  ! Will give a value to offset an array
-  ! Refer to Numerical Recipes(pg. 113) for
-  ! information about the function.
-  ! @param:
-  !   j - int, index of desired x value
-  !   m - int, shorter array length
-  !   n - int, full array length
-  ! @return:
-  !   k - int, offset for array
-  !==================================================
   function smallerIndex(j, m, n) result(k)
-    integer(kind=4) :: j, m, n
-    integer(kind=4) :: k
+    integer(i16) :: j, m, n, k
+    !-------------------------------------------------------------------------
+    !
+    ! function smallerIndex: Array Shortener
+    ! Will give a value to offset an array
+    ! Refer to Numerical Recipes(pg. 113) for
+    ! information about the function.
+    ! @param:
+    !   j - int, index of desired x value
+    !   m - int, shorter array length
+    !   n - int, full array length
+    ! @return:
+    !   k - int, offset for array
+    !
+    !-------------------------------------------------------------------------
 
     k = min(max(j-(m-1)/2, 1), n+1-m)
   end function smallerIndex

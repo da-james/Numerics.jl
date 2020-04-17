@@ -16,6 +16,10 @@ module module_values
   ! 64 bit -9223372036854775808 to 9223372036854775807
   integer, parameter :: i64 = selected_int_kind(15)
 
+  ! values for Numerical Recipes
+  integer(i16), parameter :: NMAX = 10           ! number of equations
+  integer(i16), parameter :: NSTPMX = 500        ! number of data points
+
   ! constants used in math
   real(dp), parameter :: PI = 4.0*atan(1.0)      ! pi calculated
   real(dp), parameter :: GRAVG = 6.67430d-11     ! gravitational constant [N*m^2/kg^2]

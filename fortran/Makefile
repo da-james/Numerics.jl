@@ -10,11 +10,12 @@ main = main
 # MODULE NAME (no .f90)
 mod0 = module_values
 mod1 = module_ode
+mod2 = module_interpolate
 ########################################
 cmplr = gfortran
 flags = -g -Wall
 
-objects1 = $(mod0).o $(mod1).o	$(main).o
+objects1 = $(mod0).o $(mod1).o	$(mod2).o		$(main).o
 
 $(main)		:	$(objects1)
 				$(cmplr) $(flags) -o $(main) $(objects1) -llapack -lblas
@@ -26,7 +27,10 @@ $(mod0).o : $(mod0).f90
 $(mod1).o	:	$(mod0).f90		$(mod1).f90
 				$(cmplr) -c $(mod1).f90
 
-$(main).o	:	$(main).f90		$(mod0).f90		$(mod1).f90
+$(mod2).o :	$(mod0).f90		$(mod2).f90
+				$(cmplr) -c $(mod2).f90
+
+$(main).o	:	$(main).f90		$(mod0).f90		$(mod1).f90		$(mod2).f90
 				$(cmplr) -c $(main).f90
 
 clean			:
