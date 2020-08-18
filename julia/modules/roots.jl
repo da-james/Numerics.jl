@@ -99,5 +99,4 @@ function secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::In
     return -1
 end
 
-
 end # end of module
