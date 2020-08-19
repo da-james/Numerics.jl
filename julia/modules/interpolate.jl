@@ -1,19 +1,16 @@
 module Interpolate
 
-function nevilles_method(f::Function, x::Real, xarr::Array)
-    n = size(xarr)
-    q = zeros(n, n)
-    q[:,1] = f(xarr)
+function nevilles_method(x0::Real, n::Int64, x::AbstractArray, q::Array)
 
-    for i in 1:n
+    for i in n:-1:1
         for j in 1:i
-            num = (x - xarr[i-j+1]) * q[i+1,j+1] - (x - xarr[i+1]) * q[i,j]
-            dem = x - xarr[i-j+1]
-            q[i+1,j+1] = num / dem
+            num = (x0 - x[j]) * q[j+1] - (x0 - x[j+n+1-i]) * q[j]
+            dem = x[j+n+1-i] - x[j]
+            q[j] = num / dem
         end
     end
 
-    return q
+    return q[1]
 end
 
 
