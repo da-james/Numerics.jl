@@ -1,3 +1,9 @@
+#+TITLE: README
+#+AUTHOR: David James, 20200822
+#+DATE: Updated: 20200822
+
 * Introduction
-This is a combination of numerical methods that I am programming.
-Most of them will be done in Python.
+  This is a combination of numerical methods coded in Fortran, Python, and
+  Julia. I am in the works of porting methods from my upper divison course work
+  to Julia. The respective directories have their code inside.
+  - NOTE :: the python code is perhaps the oldest and most messy.
