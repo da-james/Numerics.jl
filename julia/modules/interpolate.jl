@@ -35,24 +35,23 @@ function hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArr
     z1 = [f[ceil(Int64, i / 2)] for i in 1:n]
 
     q = zeros(n, n)
+
+    # inserting initial values
     q[:,1] = z1
 
-    for r in 1:n-2
-        for c in 2:n
-            if c==2 && r%2==1
-                q[r,c] = fprime[ceil(Int64, r / 2)]
-            elseif c==2 && r%2==0
-                q[r,c] = (q[r+1,c-1] - q[r,c-1]) / (z[r+1] - z[r])
-            else
-                q[r,c] = (q[r+1,c-1] - q[r,c-1]) / (z[r+2] - z[r])
-            end
+    # inserting first difference values
+    z2 = [i%2==1 ? fprime[ceil(Int64, i / 2)] : (q[i+1,1] - q[i,1]) / (z[i+1] - z[i]) for i in 1:n-1]
+    pushfirst!(z2, 0)
+    q[:,2] = z2
+
+    # creating lower triangular array
+    for i in 3:n
+        for j in i:n
+            q[j,i] = (q[j,i-1] - q[j-1,i-1]) / (z[j] - z[j-i+1])
         end
     end
 
-    for row in eachrow(q)
-        println(row)
-    end
-
+    return q
 end
 
 
