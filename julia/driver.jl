@@ -16,9 +16,14 @@ function main()
     # q = [132165, 151326, 179323, 203302, 226542, 249633]
     # println(Interpolate.nevilles_method(2000, 5, x, q))
 
-    x = [8.1, 8.3, 8.6, 8.7]
-    y = [16.9446, 17.56492, 18.50515, 18.82091]
-    println(Interpolate.newtons_difference(x, y))
+    # x = [8.1, 8.3, 8.6, 8.7]
+    # y = [16.9446, 17.56492, 18.50515, 18.82091]
+    # println(Interpolate.newtons_difference(x, y))
+
+    x = [1.3, 1.6, 1.9]
+    f = [0.6200860, 0.4554022, 0.2818186]
+    fprime = [-0.5220232, -0.5698959, -0.5811571]
+    Interpolate.hermites_method(x, f, fprime)
 
 end
 
