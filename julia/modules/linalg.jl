@@ -101,7 +101,7 @@ function gauss_sidel_method(a::AbstractArray, b::AbstractArray, x0::AbstractArra
             x[i] = 1 / a[i,i] * (-1 * first -1 * second + b[i])
         end
 
-        if norm(x, x0) < tol
+        if norm(x .- x0) < tol
             return x
         end
 
@@ -114,13 +114,13 @@ function gauss_sidel_method(a::AbstractArray, b::AbstractArray, x0::AbstractArra
     return
 end
 
-function norm(x::AbstractArray, y::AbstractArray)
+function norm(x::AbstractArray)
 
     n = size(x)[1]
 
     total = 0
     for i in 1:n
-        total += (x[i] - y[i])^2
+        total += (x[i])^2
     end
 
     return sqrt(total)

@@ -1,5 +1,18 @@
 module Root
 
+"""
+    bisection_method(f::Function, a::Real, b::Real; tol::Float64=1e-5, N::Int64=50)
+
+Finds a solution to f(x) = 0 given the continuous function `f` on the interval
+[`a`,`b`], where f(`a`) and f(`b`) have opposite signs
+
+# Arguments
+- `f::Function` : the continuous function given
+- `a::Real` : the start of the interval
+- `b::Real` : the end of the interval
+- `tol::Float64=1e-5` : the tolerance for error when finding x such that f(x) = 0
+- `N::Int64=50` : the max number of iterations to perform
+"""
 function bisection_method(f::Function, a::Real, b::Real; tol::Float64=1e-5, N::Int64=50)
 
     # first iteration
@@ -36,45 +49,88 @@ function bisection_method(f::Function, a::Real, b::Real; tol::Float64=1e-5, N::I
     end
 
     println("Method failed after " * string(N) * "iterations.")
-    return -1
 end
 
+"""
+    fixed_point(f::Function, p0::Real; tol::Float64=1e-5, N::Int64=50)
+
+Finds a solution p = f(p) given an initial approximation `p0`
+
+# Arguments
+- `f::Function` : the continuous function given
+- `p0::Real` : the initial approximation p0
+- `tol::Float64=1e-5` : the tolerance for error when finding x such that f(x) = 0
+- `N::Int64=50` : the max number of iterations to perform
+"""
 function fixed_point(f::Function, p0::Real; tol::Float64=1e-5, N::Int64=50)
     n = 1
 
+    # while less than max iterations
     while n <= N
+        # set current p
         p = f(p0)
 
+        # check difference between p and p0
         if abs(p - p0) < tol
             return p
         end
 
+        # iterate
         n += 1
+        # adjust p0 to new p
         p0 = p
     end
 
     println("Method failed after " * string(N) * "iterations.")
-    return -1
 end
 
+"""
+    newtons_method(f::Function, g::Function, p0::Real; tol::Float64=1e-5, N::Int64=50)
+
+Finds a solution to f(x) = 0 given an intial approximation `p0`
+
+# Arguments
+- `f::Function` : the continuous function given
+- `g::Function` : the derivative of the function `f`
+- `p0::Real` : the initial approximation p0
+- `tol::Float64=1e-5` : the tolerance for error when finding x such that f(x) = 0
+- `N::Int64=50` : the max number of iterations to perform
+"""
 function newtons_method(f::Function, g::Function, p0::Real; tol::Float64=1e-5, N::Int64=50)
     n = 1
 
+    # while less than max iterations
     while n <= N
+        # computing p_n
         p = p0 - f(p0) / g(p0)
 
+        # check difference between p and p0
         if abs(p - p0) < tol
             return p
         end
 
+        # iterate
         n += 1
+        # adjust p0 to new p
         p0 = p
     end
 
     println("Method failed after " * string(N) * "iterations.")
-    return -1
 end
 
+"""
+    secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::Int64=50)
+
+Finds a solution to f(x) = 0 given initial approximations `p0` and `p1` such that
+x is within the interval [`p0`,`p1`]
+
+# Arguments
+- `f::Function` : the continuous function given
+- `p0::Real` : the initial approximation p0
+- `p1::Real` : the initial approximation p1
+- `tol::Float64=1e-5` : the tolerance for error when finding x such that f(x) = 0
+- `N::Int64=50` : the max number of iterations to perform
+"""
 function secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::Int64=50)
     n = 2
     q0 = f(p0)
@@ -96,7 +152,6 @@ function secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::In
     end
 
     println("Method failed after " * string(N) * "iterations.")
-    return -1
 end
 
 end # end of module
