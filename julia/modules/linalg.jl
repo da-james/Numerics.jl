@@ -1,9 +1,35 @@
+"""
+    LinAlg
+
+Author: David James, davidabraham@ucla.edu
+Date: 20200824
+Notes: algorithms and descriptions come from the following
+    "Chapter 6: Direct Method for Solving Linear Systems." Numerical Analysis,
+        by Richard L. Burden et al., Cengage Learning 2016.
+    "Chapter 7: Iterative Texhniques in Matrix Algebra." Numerical Analysis,
+        by Richard L. Burden et al., Cengage Learning 2016.
+
+Contains:
+- gauss_elimination
+- crout_factorization
+- gauss_sidel_method
+- norm
+"""
 module LinAlg
 
+"""
+    gauss_elimination(a::AbstractArray)
+
+Solve out a `n`x`n` linear system, A, such that Ax = b
+
+# Arguments
+- `a::AbstractArray` : system where `[:,n+1]` column is b
+"""
 function gauss_elimination(a::AbstractArray)
 
     n = size(a)[1]
 
+    # elimination process
     for i in 1:n-1
         p = min(i, n)
         c = i
@@ -34,6 +60,7 @@ function gauss_elimination(a::AbstractArray)
         return
     end
 
+    # backward substitution
     x = zeros(n)
     x[n] = a[n,n+1] / a[n,n]
 
