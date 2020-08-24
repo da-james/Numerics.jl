@@ -33,11 +33,24 @@ function main()
     #      2.3, 2.25, 1.95, 1.4, 0.9, 0.7, 0.6, 0.5, 0.4, 0.25]
     # println(Interpolate.cubic_spline(x, a))
 
-    a = [1 -1 2 -1 -8;
-         2 -2 3 -3 -20;
-         1 1 1 0 -2;
-         1 -1 4 3 4]
-    println(LinAlg.gauss_elimination(a))
+    # a = [1 -1 2 -1 -8;
+    #      2 -2 3 -3 -20;
+    #      1 1 1 0 -2;
+    #      1 -1 4 3 4]
+    # println(LinAlg.gauss_elimination(a))
+
+    # a = [2 -1 0 0 1;
+    #      -1 2 -1 0 0;
+    #      0 -1 2 -1 0;
+    #      0 0 -1 2 1]
+    # println(LinAlg.crout_factorization(a))
+    a = [10 -1 2 0;
+         -1 11 -1 3;
+         2 -1 10 -1;
+         0 3 -1 8]
+    b = [6, 25, -11, 15]
+    x0 = [0, 0, 0, 0]
+    println(LinAlg.gauss_sidel_method(a,b,x0))
 end
 
 main()
