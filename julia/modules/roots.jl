@@ -1,10 +1,24 @@
+"""
+    Root
+
+Author: David James, davidabraham@ucla.edu
+Date: 20200824
+Notes: algorithms and descriptions come from the following
+    Burden, Richard L., et al. Numerical Analysis. Cengage Learning 2016
+
+Contains:
+- bisection_method
+- fixed_point
+- newtons_method
+- secant_method
+"""
 module Root
 
 """
     bisection_method(f::Function, a::Real, b::Real; tol::Float64=1e-5, N::Int64=50)
 
-Finds a solution to f(x) = 0 given the continuous function `f` on the interval
-[`a`,`b`], where f(`a`) and f(`b`) have opposite signs
+Find a solution to f(x) = 0 given the continuous function `f` on the interval
+[`a`,`b`], where f(`a`) and f(`b`) have opposite signs.
 
 # Arguments
 - `f::Function` : the continuous function given
@@ -54,7 +68,7 @@ end
 """
     fixed_point(f::Function, p0::Real; tol::Float64=1e-5, N::Int64=50)
 
-Finds a solution p = f(p) given an initial approximation `p0`
+Find a solution p = f(p) given an initial approximation `p0`.
 
 # Arguments
 - `f::Function` : the continuous function given
@@ -87,7 +101,7 @@ end
 """
     newtons_method(f::Function, g::Function, p0::Real; tol::Float64=1e-5, N::Int64=50)
 
-Finds a solution to f(x) = 0 given an intial approximation `p0`
+Find a solution to f(x) = 0 given an intial approximation `p0`.
 
 # Arguments
 - `f::Function` : the continuous function given
@@ -121,8 +135,8 @@ end
 """
     secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::Int64=50)
 
-Finds a solution to f(x) = 0 given initial approximations `p0` and `p1` such that
-x is within the interval [`p0`,`p1`]
+Find a solution to f(x) = 0 given initial approximations `p0` and `p1` such that
+x is within the interval [`p0`,`p1`].
 
 # Arguments
 - `f::Function` : the continuous function given
