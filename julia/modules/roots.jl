@@ -4,7 +4,8 @@
 Author: David James, davidabraham@ucla.edu
 Date: 20200824
 Notes: algorithms and descriptions come from the following
-    Burden, Richard L., et al. Numerical Analysis. Cengage Learning 2016
+    "Chapter 2: Solutions of Equations in One Variable." Numerical Analysis, by
+        Richard L. Burden et al., Cengage Learning 2016.
 
 Contains:
 - bisection_method

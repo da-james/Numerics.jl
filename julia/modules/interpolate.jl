@@ -1,6 +1,34 @@
+"""
+    Interpolate
+
+Author: David James, davidabraham@ucla.edu
+Date: 20200824
+Notes: algorithms and descriptions come from the following
+    "Chapter 3: Interpolation and Polynomial Approximation." Numerical Analysis,
+        by Richard L. Burden et al., Cengage Learning 2016.
+
+Contains:
+- nevilles_method
+- newtons_difference
+- hermites_method
+- cubic_spline
+"""
 module Interpolate
 
-function nevilles_method(x0::Real, n::Int64, x::AbstractArray, q::Array)
+"""
+    nevilles_method(x0::Real, x::AbstractArray, q::AbstractArray)
+
+Evaluate the interpolating polynomial P on `n` distinct numbers `x` for the
+function `f`.
+
+# Arguments
+- `x0::Real` : the value to be approximated
+- `x::AbstractArray` : the set of `x` values for the function
+- `q::AbstractArray` : the set of f(x) values
+"""
+function nevilles_method(x0::Real, x::AbstractArray, q::AbstractArray)
+
+    n = size(x)[1]
 
     for i in n:-1:1
         for j in 1:i
@@ -13,6 +41,16 @@ function nevilles_method(x0::Real, n::Int64, x::AbstractArray, q::Array)
     return q[1]
 end
 
+"""
+    newtons_difference(x::AbstractArray, q::AbstractArray)
+
+Obtain the divided-difference coefficients of the interpolatory polynomial P on
+the `n` distinct numbers of `x` for the function `f`.
+
+# Arguments
+- `x::AbstractArray` : the set of `x` values for the function
+- `q::AbstractArray` : the set of f(x) values
+"""
 function newtons_difference(x::AbstractArray, q::AbstractArray)
 
     n = size(x)[1]
@@ -28,6 +66,17 @@ function newtons_difference(x::AbstractArray, q::AbstractArray)
     return f
 end
 
+"""
+    hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArray)
+
+Obtain the coefficients of the Hermite interpolating polynomial H(x) on `n`
+distinct numbers of `x` for the function `f`
+
+# Arguments
+- `x::AbstractArray` : the set of `x` values for the function
+- `f::AbstractArray` : the set of f(x) values
+- `fprime::AbstractArray` : the set of f'(x) values
+"""
 function hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArray)
 
     n = 2 * size(x)[1]
