@@ -54,5 +54,45 @@ function hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArr
     return q
 end
 
+function cubic_spline(x::AbstractArray, a::AbstractArray)
+
+    n = size(x)[1]
+
+    h = zeros(n-1)
+    α = zeros(n-1)
+
+    for i in 1:n-1
+        h[i] = x[i+1] - x[i]
+        if i >= 2
+            α[i] = (3 / h[i]) * (a[i+1] - a[i]) - (3 / h[i-1]) * (a[i] - a[i-1])
+        end
+    end
+
+    l = zeros(n)
+    μ = zeros(n)
+    z = zeros(n)
+
+    b = zeros(n)
+    c = zeros(n)
+    d = zeros(n)
+
+    l[1] = 1
+
+    for i in 2:n-1
+        l[i] = 2 * (x[i+1] - x[i-1]) - h[i-1] * μ[i-1]
+        μ[i] = h[i] / l[i]
+        z[i] = (α[i] - h[i-1] * z[i-1]) / l[i]
+    end
+
+    l[n] = 1
+
+    for j in n-1:-1:1
+        c[j] = z[j] - μ[j] * c[j+1]
+        b[j] = (a[j+1] - a[j]) / h[j] - (c[j+1] + 2 * c[j]) * (h[j] / 3)
+        d[j] = (c[j+1] - c[j]) / (3 * h[j])
+    end
+
+    return a, b, c, d
+end
 
 end # end of module
