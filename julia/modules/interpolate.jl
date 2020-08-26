@@ -103,6 +103,15 @@ function hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArr
     return q
 end
 
+"""
+    cubic_spline(x::AbstractArray, a::AbstractArray)
+
+Construct the cubic spline interpolant `S` for the function `f`, defined within `x`.
+
+# Arguments
+- `x::AbstractArray` : the set of `x` values for the function
+- `a::AbstractArray` : the set of f(x) values
+"""
 function cubic_spline(x::AbstractArray, a::AbstractArray)
 
     n = size(x)[1]
@@ -117,6 +126,7 @@ function cubic_spline(x::AbstractArray, a::AbstractArray)
         end
     end
 
+    # constructing tridiagonal linear system
     l = zeros(n)
     μ = zeros(n)
     z = zeros(n)
@@ -127,6 +137,8 @@ function cubic_spline(x::AbstractArray, a::AbstractArray)
 
     l[1] = 1
 
+    # solving out tridiagonal system
+    # similar to crout_factorization in LinAlg module
     for i in 2:n-1
         l[i] = 2 * (x[i+1] - x[i-1]) - h[i-1] * μ[i-1]
         μ[i] = h[i] / l[i]

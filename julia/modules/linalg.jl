@@ -76,6 +76,15 @@ function gauss_elimination(a::AbstractArray)
     return x
 end
 
+"""
+    crout_factorization(a::AbstractArray)
+
+Solve a `n`x`n` tridiagonal linear system which is assumed to have a unique solution where
+Ax = b.
+
+# Arguments
+- `a::AbstractArray` : system where `[:,n+1]` column is b
+"""
 function crout_factorization(a::AbstractArray)
     n = size(a)[1]
 
@@ -84,6 +93,7 @@ function crout_factorization(a::AbstractArray)
     z = zeros(n)
     x = zeros(n)
 
+    # set and solve Lz = b
     l[1,1] = a[1,1]
     u[1,2] = a[1,2] / l[1,1]
     z[1] = a[1,n+1] / l[1,1]
@@ -99,6 +109,7 @@ function crout_factorization(a::AbstractArray)
     l[n,n] = a[n,n] - l[n,n-1] * u[n-1,n]
     z[n] = (a[n,n+1] - l[n,n-1] * z[n-1]) / l[n,n]
 
+    # set up and solve Ux = z
     x[n] = z[n]
 
     for i in n-1:-1:1
@@ -108,6 +119,18 @@ function crout_factorization(a::AbstractArray)
     return x
 end
 
+"""
+    gauss_sidel_method(a::AbstractArray, b::AbstractArray, x0::AbstractArray; tol::Float64=1e-5, N::Int64=50)
+
+Solve Ax = b given an initial approximation `x0`
+
+# Arguments
+- `a::AbstractArray` : the `n`x`n` matrix A
+- `b::AbstractArray` : the entries for vector b
+- `x0::AbstractArray` : the initial approximation
+- `tol::Float64=1e-5` : the tolerance for error when solving out
+- `N::Int64=50` : the max number of iterations to perform
+"""
 function gauss_sidel_method(a::AbstractArray, b::AbstractArray, x0::AbstractArray; tol::Float64=1e-5, N::Int64=50)
 
     n = size(a)[1]
@@ -141,14 +164,14 @@ function gauss_sidel_method(a::AbstractArray, b::AbstractArray, x0::AbstractArra
     return
 end
 
+"""
+    norm(x::AbstractArray)
+
+Calculate the Euclidean norm of the vector `x`.
+"""
 function norm(x::AbstractArray)
 
-    n = size(x)[1]
-
-    total = 0
-    for i in 1:n
-        total += (x[i])^2
-    end
+    total = sum(x.^2)
 
     return sqrt(total)
 end
