@@ -1,13 +1,15 @@
 include("modules/roots.jl")
 include("modules/interpolate.jl")
 include("modules/linalg.jl")
+include("modules/ode.jl")
 
 using .Root
 using .Interpolate
 using .LinAlg
+using .ODE
 
 
-function main()
+function math151a()
 
     # f(x) = x - (x^3 + 4*x^2 - 10) / (3*x^2 + 8*x)
     # zero = Root.bisection_method(f, -2, -3)
@@ -44,6 +46,7 @@ function main()
     #      0 -1 2 -1 0;
     #      0 0 -1 2 1]
     # println(LinAlg.crout_factorization(a))
+
     a = [10 -1 2 0;
          -1 11 -1 3;
          2 -1 10 -1;
@@ -53,4 +56,14 @@ function main()
     println(LinAlg.gauss_sidel_method(a,b,x0))
 end
 
-main()
+function math151b()
+    df(t, y) = y - t^2 + 1
+    a = 0
+    b = 2
+    y0 = 0.5
+    n = 4
+    println(ODE.eulers_method(df, y0, a, b, n))
+
+end
+
+math151b()
