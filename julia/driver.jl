@@ -61,9 +61,10 @@ function math151b()
     a = 0
     b = 2
     y0 = 0.5
-    n = 4
-    println(ODE.eulers_method(df, y0, a, b, n))
-
+    n = 10
+    # println(ODE.eulers_method(df, y0, a, b, n))
+    arr = ODE.rk4_method(df, y0, a, b, n)
+    display(arr)
 end
 
 math151b()
