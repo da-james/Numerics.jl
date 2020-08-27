@@ -70,5 +70,47 @@ function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
     return u
 end
 
+function trapezoid_method(f::Function, df::Function, α::Real, a::Real, b::Real, N::Int64; tol::Float64=1e-5, M::Int64=10)
+
+    n1 = N + 1
+    u = zeros(n1,2)
+
+    h = (b - a) / N
+    u[1,1] = a
+    u[1,2] = α
+
+    for i in 2:n1
+        ti = u[i-1,1]
+        wi = u[i-1,2]
+
+        k1 = wi + h / 2 * f(ti, wi)
+        w0 = k1
+        j = 1
+        FLAG = 0
+
+        while FLAG == 0
+            num = w0 - (h / 2 * f(ti + h, w0)) - k1
+            dem = 1 - h / 2 * df(ti + h, w0)
+
+            w = w0 - num / dem
+
+            if abs(w - w0) < tol
+                FLAG = 1
+            else
+                j += 1
+                w0 = w
+                if j > M
+                    println("The maximum number of iterations exceeded")
+                    return nothing
+                end
+            end
+            u[i, 2] = w
+        end
+
+        u[i, 1] = a + i * h
+    end
+
+    return u
+end
 
 end # end of module

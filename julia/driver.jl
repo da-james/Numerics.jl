@@ -66,21 +66,26 @@ function math151b()
     # arr = ODE.rk4_method(df, y0, a, b, n)
     # display(arr)
 
-    function dI(t, i)
-        i1 = i[1]
-        i2 = i[2]
+    # function dI(t, i)
+    #     i1 = i[1]
+    #     i2 = i[2]
+    #     di1 = -4 * i1 + 3 * i2 + 6
+    #     di2 = -2.4 * i1 + 1.6 * i2 + 3.6
+    #     return [di1, di2]
+    # end
+    # a = 0
+    # b = 0.5
+    # i0 = [0, 0]
+    # n = 5
+    # display(ODE.rk4_system(dI, i0, a, b, n))
 
-        di1 = -4 * i1 + 3 * i2 + 6
-        di2 = -2.4 * i1 + 1.6 * i2 + 3.6
-
-        return [di1, di2]
-    end
-
+    f(t, y) = 5 * exp(5 * t) * (y - t)^2 + 1
+    df(t, y) = 10 * exp(5 * t) * (y - t)
     a = 0
-    b = 0.5
-    i0 = [0, 0]
-    n = 5
-    display(ODE.rk4_system(dI, i0, a, b, n))
+    b = 1
+    y0 = -1
+    n = 4
+    display(ODE.trapezoid_method(f, df, y0, a, b, n, tol=1e-6))
 end
 
 math151b()
