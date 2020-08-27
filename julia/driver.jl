@@ -57,14 +57,30 @@ function math151a()
 end
 
 function math151b()
-    df(t, y) = y - t^2 + 1
-    a = 0
-    b = 2
-    y0 = 0.5
-    n = 10
+    # df(t, y) = y - t^2 + 1
+    # a = 0
+    # b = 2
+    # y0 = 0.5
+    # n = 10
     # println(ODE.eulers_method(df, y0, a, b, n))
-    arr = ODE.rk4_method(df, y0, a, b, n)
-    display(arr)
+    # arr = ODE.rk4_method(df, y0, a, b, n)
+    # display(arr)
+
+    function dI(t, i)
+        i1 = i[1]
+        i2 = i[2]
+
+        di1 = -4 * i1 + 3 * i2 + 6
+        di2 = -2.4 * i1 + 1.6 * i2 + 3.6
+
+        return [di1, di2]
+    end
+
+    a = 0
+    b = 0.5
+    i0 = [0, 0]
+    n = 5
+    display(ODE.rk4_system(dI, i0, a, b, n))
 end
 
 math151b()
