@@ -2,11 +2,13 @@ include("modules/roots.jl")
 include("modules/interpolate.jl")
 include("modules/linalg.jl")
 include("modules/ode.jl")
+include("modules/approx.jl")
 
 using .Root
 using .Interpolate
 using .LinAlg
 using .ODE
+using .Approximate
 
 
 function math151a()
@@ -79,13 +81,17 @@ function math151b()
     # n = 5
     # display(ODE.rk4_system(dI, i0, a, b, n))
 
-    f(t, y) = 5 * exp(5 * t) * (y - t)^2 + 1
-    df(t, y) = 10 * exp(5 * t) * (y - t)
-    a = 0
-    b = 1
-    y0 = -1
-    n = 4
-    display(ODE.trapezoid_method(f, df, y0, a, b, n, tol=1e-6))
+    # f(t, y) = 5 * exp(5 * t) * (y - t)^2 + 1
+    # df(t, y) = 10 * exp(5 * t) * (y - t)
+    # a = 0
+    # b = 1
+    # y0 = -1
+    # n = 4
+    # display(ODE.trapezoid_method(f, df, y0, a, b, n, tol=1e-6))
+    # display(ODE.rk4_method(f, y0, a, b, n))
+
+    y = [0.26440, 0.84081, 1.36150, 1.61282, 1.36672, 0.71697, 0.07909, -0.14576]
+    display(Approximate.fft(y))
 end
 
 math151b()

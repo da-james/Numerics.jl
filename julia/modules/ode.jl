@@ -107,7 +107,7 @@ function trapezoid_method(f::Function, df::Function, α::Real, a::Real, b::Real,
             u[i, 2] = w
         end
 
-        u[i, 1] = a + i * h
+        u[i, 1] = a + (i - 1) * h
     end
 
     return u
