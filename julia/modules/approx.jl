@@ -1,4 +1,3 @@
-
 module Approximate
 
 function fft(x::AbstractVector)

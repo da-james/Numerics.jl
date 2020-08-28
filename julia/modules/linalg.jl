@@ -120,18 +120,17 @@ function crout_factorization(a::AbstractArray)
 end
 
 """
-    gauss_sidel_method(a::AbstractArray, b::AbstractArray, x0::AbstractArray; tol::Float64=1e-5, N::Int64=50)
-
+    gauss_sidel_method(a::AbstractMatrix, b::AbstractVector, x0::AbstractVector; tol::Float64=1e-5, N::Int64=50)
 Solve Ax = b given an initial approximation `x0`
 
 # Arguments
-- `a::AbstractArray` : the `n`x`n` matrix A
-- `b::AbstractArray` : the entries for vector b
-- `x0::AbstractArray` : the initial approximation
+- `a::AbstractMatrix` : the `n`x`n` matrix A
+- `b::AbstractVector` : the entries for vector b
+- `x0::AbstractVector` : the initial approximation
 - `tol::Float64=1e-5` : the tolerance for error when solving out
 - `N::Int64=50` : the max number of iterations to perform
 """
-function gauss_sidel_method(a::AbstractArray, b::AbstractArray, x0::AbstractArray; tol::Float64=1e-5, N::Int64=50)
+function gauss_sidel_method(a::AbstractMatrix, b::AbstractVector, x0::AbstractVector; tol::Float64=1e-5, N::Int64=50)
 
     n = size(a)[1]
     x = zeros(n)

@@ -3,12 +3,14 @@ include("modules/interpolate.jl")
 include("modules/linalg.jl")
 include("modules/ode.jl")
 include("modules/approx.jl")
+include("modules/nonlinear.jl")
 
 using .Root
 using .Interpolate
 using .LinAlg
 using .ODE
 using .Approximate
+using .Nonlinear
 
 
 function math151a()
@@ -90,8 +92,21 @@ function math151b()
     # display(ODE.trapezoid_method(f, df, y0, a, b, n, tol=1e-6))
     # display(ODE.rk4_method(f, y0, a, b, n))
 
-    y = [0.26440, 0.84081, 1.36150, 1.61282, 1.36672, 0.71697, 0.07909, -0.14576]
-    display(Approximate.fft(y))
+    # y = [0.26440, 0.84081, 1.36150, 1.61282, 1.36672, 0.71697, 0.07909, -0.14576]
+    # display(Approximate.fft(y))
+
+    function df(x)
+        x1 = x[1]
+        x2 = x[2]
+        x3 = x[3]
+        df1 = 3 * x1 - cos(x2 * x3) - 1 / 2
+        df2 = x1^2 - (81 * (x2 + 0.1)^2) + sin(x3) + 1.06
+        df3 = exp(-x1 * x2) + 20 * x3 + ((10 * pi - 3) / 3)
+        return [df1, df2, df3]
+    end
+    x0 = [0.1, 0.1, -0.1]
+    display(Nonlinear.newtons_system(df, x0))
+
 end
 
 math151b()
