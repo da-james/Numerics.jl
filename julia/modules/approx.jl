@@ -1,5 +1,23 @@
+"""
+    Approximate
+
+Author: David James, davidabraham@ucla.edu
+Date: 20200829
+Notes: algorithms and descriptions come from the following
+    "Chapter 8: Approximation Theory." Numerical Analysis,
+        by Richard L. Burden et al., Cengage Learning 2016.
+
+Contains:
+- fft
+"""
 module Approximate
 
+"""
+    fft(x::AbstractVector)
+
+Compute the coefficients in the summation
+    1/m*Σ{k=0, 2*m-1}{c_k * exp((k*x)im)}
+"""
 function fft(x::AbstractVector)
 
     N = size(x)[1]
