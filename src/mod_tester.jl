@@ -5,6 +5,7 @@ include("modules/ode.jl")
 include("modules/approx.jl")
 include("modules/nonlinear.jl")
 include("modules/bvp.jl")
+include("modules/pde.jl")
 
 using .Root
 using .Interpolate
@@ -13,6 +14,7 @@ using .ODE
 using .Approximate
 using .Nonlinear
 using .BVP
+using .PDE
 
 
 function math151a()
@@ -109,14 +111,22 @@ function math151b()
     # x0 = [0.1, 0.1, -0.1]
     # display(Nonlinear.newtons_system(df, x0))
 
-    p(x) = -2 / x
-    q(x) = 2 / x^2
-    r(x) = sin(log(x)) / x^2
-    a = 1
-    b = 2
-    α = 1
-    β = 2
-    display(BVP.linear_difference(p, q, r, a, b, α, β, 9))
+    # p(x) = -2 / x
+    # q(x) = 2 / x^2
+    # r(x) = sin(log(x)) / x^2
+    # a = 1
+    # b = 2
+    # α = 1
+    # β = 2
+    # display(BVP.finite_difference(p, q, r, a, b, α, β, 9))
+
+    x = (0, 2)
+    y = (0, 1)
+    f(x,y) = x
+    g(x,y) = exp(x)
+    n = 6
+    m = 5
+    display(PDE.poisson_finite_difference(f, g, x, y, m, n))
 
 end
 
