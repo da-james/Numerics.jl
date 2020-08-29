@@ -1,5 +1,34 @@
+"""
+    ODE
+
+Author: David James, davidabraham@ucla.edu
+Date: 20200829
+Notes: algorithms and descriptions come from the following
+    "Chapter 5: Initial-Value Problems for ODEs." Numerical Analysis,
+        by Richard L. Burden et al., Cengage Learning 2016.
+
+Contains:
+- eulers_method
+- rk4_method
+- rk4_system
+- trapezoid_method
+"""
 module ODE
 
+"""
+    eulers_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
+
+Approximate the solution of the initial-value problem (IVP)
+    y' = f(t,y), a <= t <= b, y(a) = α
+at (N + 1) equally spaced numbers in the interval [a,b].
+
+# Arguments
+- `f::Function` : the ODE
+- `α::Real` : the initial condition such that y(a) = α
+- `a::Real` : the left-sided endpoint
+- `b::Real` : the right-sided endpoint
+- `N:Int64` : the spacing on the interval of [a,b]
+"""
 function eulers_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
 
     n1 = N + 1
@@ -17,6 +46,20 @@ function eulers_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
     return u
 end
 
+"""
+    rk4_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
+
+Approximate the solution of the initial-value problem (IVP)
+    y' = f(t,y), a <= t <= b, y(a) = α
+at (N + 1) equally spaced numbers in the interval [a,b].
+
+# Arguments
+- `f::Function` : the ODE
+- `α::Real` : the initial condition such that y(a) = α
+- `a::Real` : the left-sided endpoint
+- `b::Real` : the right-sided endpoint
+- `N:Int64` : the spacing on the interval of [a,b]
+"""
 function rk4_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
 
     n1 = N + 1
@@ -42,6 +85,20 @@ function rk4_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
     return u
 end
 
+"""
+    rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
+
+Approximate the solution of the mth-order system of first-order IVP
+    u'_j = f_j(t, u1, u2, ..., u_m), a <= t <= b, with u_j(a) = α_j
+for j = 1, 2, ..., m at (N + 1) equally spaced numbers in the interval [a,b].
+
+# Arguments
+- `f::Function` : the system of equations of ODEs
+- `α::Real` : the initial conditions for the system
+- `a::Real` : the left-sided endpoint
+- `b::Real` : the right-sided endpoint
+- `N:Int64` : the spacing on the interval of [a,b]
+"""
 function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
 
     n1 = N + 1
@@ -70,6 +127,21 @@ function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
     return u
 end
 
+"""
+    trapezoid_method(f::Function, df::Function, α::Real, a::Real, b::Real, N::Int64; tol::Float64=1e-5, M::Int64=10)
+
+Approximate the solution of the stiff initial-value problem (IVP)
+    y' = f(t,y), a <= t <= b, y(a) = α
+at (N + 1) equally spaced numbers in the interval [a,b].
+
+# Arguments
+- `f::Function` : the ODE as f(t,y)
+- `df::Function` : the derivative of f(t,y)
+- `α::Real` : the initial condition such that y(a) = α
+- `a::Real` : the left-sided endpoint
+- `b::Real` : the right-sided endpoint
+- `N:Int64` : the spacing on the interval of [a,b]
+"""
 function trapezoid_method(f::Function, df::Function, α::Real, a::Real, b::Real, N::Int64; tol::Float64=1e-5, M::Int64=10)
 
     n1 = N + 1

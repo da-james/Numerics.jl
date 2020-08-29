@@ -6,7 +6,7 @@ using .LinAlg
 
 const la = LinAlg
 
-function linear_difference(p::Function, q::Function, r::Function, a::Real, b::Real, α::Real, β::Real, N::Int64)
+function finite_difference(p::Function, q::Function, r::Function, a::Real, b::Real, α::Real, β::Real, N::Int64)
 
     h = (b - a) / (N + 1)
 
