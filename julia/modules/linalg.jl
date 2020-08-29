@@ -18,14 +18,14 @@ Contains:
 module LinAlg
 
 """
-    gauss_elimination(a::AbstractArray)
+    gauss_elimination(a::AbstractMatrix)
 
 Solve out a `n`x`n` linear system, A, such that Ax = b
 
 # Arguments
-- `a::AbstractArray` : system where `[:,n+1]` column is b
+- `a::AbstractMatrix` : system where `[:,n+1]` column is b
 """
-function gauss_elimination(a::AbstractArray)
+function gauss_elimination(a::AbstractMatrix)
 
     n = size(a)[1]
 
@@ -77,15 +77,15 @@ function gauss_elimination(a::AbstractArray)
 end
 
 """
-    crout_factorization(a::AbstractArray)
+    crout_factorization(a::AbstractMatrix)
 
 Solve a `n`x`n` tridiagonal linear system which is assumed to have a unique solution where
 Ax = b.
 
 # Arguments
-- `a::AbstractArray` : system where `[:,n+1]` column is b
+- `a::AbstractMatrix` : system where `[:,n+1]` column is b
 """
-function crout_factorization(a::AbstractArray)
+function crout_factorization(a::AbstractMatrix)
     n = size(a)[1]
 
     l = zeros(n, n)

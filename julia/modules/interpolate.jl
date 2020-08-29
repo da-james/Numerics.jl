@@ -16,17 +16,17 @@ Contains:
 module Interpolate
 
 """
-    nevilles_method(x0::Real, x::AbstractArray, q::AbstractArray)
+    nevilles_method(x0::Real, x::AbstractVector, q::AbstractVector)
 
 Evaluate the interpolating polynomial P on `n` distinct numbers `x` for the
 function `f`.
 
 # Arguments
 - `x0::Real` : the value to be approximated
-- `x::AbstractArray` : the set of `x` values for the function
-- `q::AbstractArray` : the set of f(x) values
+- `x::AbstractVector` : the set of `x` values for the function
+- `q::AbstractVector` : the set of f(x) values
 """
-function nevilles_method(x0::Real, x::AbstractArray, q::AbstractArray)
+function nevilles_method(x0::Real, x::AbstractVector, q::AbstractVector)
 
     n = size(x)[1]
 
@@ -42,16 +42,16 @@ function nevilles_method(x0::Real, x::AbstractArray, q::AbstractArray)
 end
 
 """
-    newtons_difference(x::AbstractArray, q::AbstractArray)
+    newtons_difference(x::AbstractVector, q::AbstractVector)
 
 Obtain the divided-difference coefficients of the interpolatory polynomial P on
 the `n` distinct numbers of `x` for the function `f`.
 
 # Arguments
-- `x::AbstractArray` : the set of `x` values for the function
-- `q::AbstractArray` : the set of f(x) values
+- `x::AbstractVector` : the set of `x` values for the function
+- `q::AbstractVector` : the set of f(x) values
 """
-function newtons_difference(x::AbstractArray, q::AbstractArray)
+function newtons_difference(x::AbstractVector, q::AbstractVector)
 
     n = size(x)[1]
     f = zeros(n, n)
@@ -67,17 +67,17 @@ function newtons_difference(x::AbstractArray, q::AbstractArray)
 end
 
 """
-    hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArray)
+    hermites_method(x::AbstractVector, f::AbstractVector, fprime::AbstractVector)
 
 Obtain the coefficients of the Hermite interpolating polynomial H(x) on `n`
 distinct numbers of `x` for the function `f`
 
 # Arguments
-- `x::AbstractArray` : the set of `x` values for the function
-- `f::AbstractArray` : the set of f(x) values
-- `fprime::AbstractArray` : the set of f'(x) values
+- `x::AbstractVector` : the set of `x` values for the function
+- `f::AbstractVector` : the set of f(x) values
+- `fprime::AbstractVector` : the set of f'(x) values
 """
-function hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArray)
+function hermites_method(x::AbstractVector, f::AbstractVector, fprime::AbstractVector)
 
     n = 2 * size(x)[1]
     z = [x[ceil(Int64, i / 2)] for i in 1:n]
@@ -104,15 +104,15 @@ function hermites_method(x::AbstractArray, f::AbstractArray, fprime::AbstractArr
 end
 
 """
-    cubic_spline(x::AbstractArray, a::AbstractArray)
+    cubic_spline(x::AbstractVector, a::AbstractVector)
 
 Construct the cubic spline interpolant `S` for the function `f`, defined within `x`.
 
 # Arguments
-- `x::AbstractArray` : the set of `x` values for the function
-- `a::AbstractArray` : the set of f(x) values
+- `x::AbstractVector` : the set of `x` values for the function
+- `a::AbstractVector` : the set of f(x) values
 """
-function cubic_spline(x::AbstractArray, a::AbstractArray)
+function cubic_spline(x::AbstractVector, a::AbstractVector)
 
     n = size(x)[1]
 
