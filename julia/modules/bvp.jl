@@ -8,35 +8,41 @@ const la = LinAlg
 
 function linear_difference(p::Function, q::Function, r::Function, a::Real, b::Real, α::Real, β::Real, N::Int64)
 
-    h = (b - a) / N
+    h = (b - a) / (N + 1)
 
     x = a:h:b
-    println(size(x))
-    println(x[1])
-    println(x[2])
-    println(x[end])
     A = zeros(N, N + 1)
 
-    A[1,N+1] = -h^2 * r(x[1]) + (1 + h / 2 * p(x[1])) * α
-    A[N,N] = 2 + h^2 * q(x[N])
+    A[1,N+1] = -h^2 * r(x[2]) + (1 + h / 2 * p(x[2])) * α
+    A[N,N] = 2 + h^2 * q(x[N+1])
 
     for i in 2:N
-        s1 = i-1
-        A[s1,s1+1] = -1 + h / 2 * p(x[s1])
-        A[i-1,i-1] = 2 + h^2 * q(x[i-1])
-        A[i,i-1] = -1 - h / 2 * p(x[i-1])
+        s1 = i - 1
+        i1 = i + 1
+
+        A[s1,s1+1] = -1 + h / 2 * p(x[i])
+        A[s1,s1] = 2 + h^2 * q(x[i])
+        A[i,s1] = -1 - h / 2 * p(x[i1])
 
         if i < N
-            A[1,i] = -h^2 * r(x[i])
+            A[i,N+1] = -h^2 * r(x[i1])
         else
-            A[1,i] = -h^2 * r(x[i]) + (1 - h / 2 * p(x[i])) * β
+            A[i,N+1] = -h^2 * r(x[i1]) + (1 - h / 2 * p(x[i1])) * β
         end
     end
 
     w = la.crout_factorization(A)
-    println(size(w))
 
-    return (x, w)
+    n = size(x)[1]
+    u = zeros(n, 2)
+
+    u[:,1] = x
+
+    u[1,2] = α
+    u[2:n-1,2] = w
+    u[n,2] = β
+
+    return u
 end
 
 end # end of module
