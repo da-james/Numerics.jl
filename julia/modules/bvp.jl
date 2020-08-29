@@ -1,3 +1,15 @@
+"""
+    BVP
+
+Author: David James, davidabraham@ucla.edu
+Date: 20200829
+Notes: algorithms and descriptions come from the following
+    "Chapter 11: Boundary-Value Problems for ODEs." Numerical Analysis,
+        by Richard L. Burden et al., Cengage Learning 2016.
+
+Contains:
+- finite_difference
+"""
 module BVP
 
 include("linalg.jl")
@@ -6,6 +18,22 @@ using .LinAlg
 
 const la = LinAlg
 
+"""
+    finite_difference(p::Function, q::Function, r::Function, a::Real, b::Real, α::Real, β::Real, N::Int64)
+
+Approximate the solution of the boundary-value problem
+    y'' = p(x)*y' + q(x)*y + r(x), for a <= x <= b, with y(a)=α and y(b)=β
+
+# Arguments
+- `p::Function` : the p(x) equation next to y'
+- `q::Function` : the q(x) equation next to y
+- `r::Function` : the r(x) equation
+- `a::Real` : the left-sided endpoint
+- `b::Real` : the right-sided endpoint
+- `α::Real` : the initial conditions for the system s.t. y(a)=α
+- `β::Real` : the initial conditions for the system s.t. y(b)=β
+- `N:Int64` : the spacing on the interval of [a,b]
+"""
 function finite_difference(p::Function, q::Function, r::Function, a::Real, b::Real, α::Real, β::Real, N::Int64)
 
     h = (b - a) / (N + 1)
