@@ -3,16 +3,19 @@ include("modules/interpolate.jl")
 include("modules/linalg.jl")
 include("modules/ode.jl")
 include("modules/approx.jl")
-include("modules/nonlinear.jl")
+include("modules/nde.jl")
 include("modules/bvp.jl")
 include("modules/pde.jl")
+
+include("math151a/methods.jl")
+using .Methods
 
 using .Root
 using .Interpolate
 using .LinAlg
 using .ODE
 using .Approximate
-using .Nonlinear
+using .NDE
 using .BVP
 using .PDE
 
@@ -130,4 +133,14 @@ function math151b()
 
 end
 
-math151b()
+function trans()
+
+    f(x) = x - (x^3 + 4*x^2 - 10) / (3*x^2 + 8*x)
+    zero = Root.bisection_method(f, -2, -3)
+    vals = Methods.bisection_method(f, -2, -3)
+    println(zero)
+    display(vals)
+
+end
+
+trans()

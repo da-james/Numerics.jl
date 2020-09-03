@@ -45,7 +45,6 @@ function bisection_method(f::Function, a::Real, b::Real; tol::Float64=1e-5, N::I
         # if mid point is less than tolerance
         # then return p
         if fp == 0 || abs(mid) < tol
-            println("iterations: ", n)
             return p
         end
 
@@ -64,6 +63,7 @@ function bisection_method(f::Function, a::Real, b::Real; tol::Float64=1e-5, N::I
     end
 
     println("Method failed after " * string(N) * "iterations.")
+    return nothing
 end
 
 """
@@ -97,6 +97,7 @@ function fixed_point(f::Function, p0::Real; tol::Float64=1e-5, N::Int64=50)
     end
 
     println("Method failed after " * string(N) * "iterations.")
+    return nothing
 end
 
 """
@@ -131,6 +132,7 @@ function newtons_method(f::Function, g::Function, p0::Real; tol::Float64=1e-5, N
     end
 
     println("Method failed after " * string(N) * "iterations.")
+    return nothing
 end
 
 """
@@ -167,6 +169,7 @@ function secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::In
     end
 
     println("Method failed after " * string(N) * "iterations.")
+    return nothing
 end
 
 end # end of module
