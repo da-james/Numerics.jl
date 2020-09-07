@@ -7,7 +7,7 @@ include("modules/nde.jl")
 include("modules/bvp.jl")
 include("modules/pde.jl")
 
-include("math151a/methods.jl")
+include("math151/methods.jl")
 using .Methods
 
 using .Root
@@ -135,12 +135,22 @@ end
 
 function trans()
 
-    f(x) = x - (x^3 + 4*x^2 - 10) / (3*x^2 + 8*x)
-    zero = Root.bisection_method(f, -2, -3)
-    vals = Methods.bisection_method(f, -2, -3)
-    println(zero)
-    display(vals)
+    # f(x) = x - (x^3 + 4*x^2 - 10) / (3*x^2 + 8*x)
+    # zero = Root.bisection_method(f, -2, -3)
+    # vals = Methods.bisection_method(f, -2, -3)
+    # println(zero)
+    # display(vals)
 
+    df(t, y) = y - t^2 + 1
+    a = 0
+    b = 2
+    y0 = 0.5
+    n = 10
+    # arr = ODE.eulers_method(df, y0, a, b, n)
+    # display(Methods.eulers_method(df, y0, a, b, n))
+    arr = ODE.rk4_method(df, y0, a, b, n)
+    display(Methods.rk4_method(df, y0, a, b, n))
+    display(arr)
 end
 
 trans()
