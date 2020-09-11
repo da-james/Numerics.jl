@@ -1,4 +1,3 @@
-#+TITLE: README
 #+AUTHOR: David James
 #+EMAIL: davidabraham@ucla.edu
 #+DESCRIPTION: A library of numerical methods coded in Fortran and Python
