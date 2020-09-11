@@ -1,9 +1,23 @@
 #+TITLE: README
-#+AUTHOR: David James, 20200822
-#+DATE: Updated: 20200822
+#+AUTHOR: David James
+#+EMAIL: davidabraham@ucla.edu
+#+DESCRIPTION: A library of numerical methods coded in Fortran and Python
+#+KEYWORDS: python, julia, fortran, math, numerical methods
 
 * Introduction
   This is a combination of numerical methods coded in Fortran, Python, and
-  Julia. I am in the works of porting methods from my upper divison course work
-  to Julia. The respective directories have their code inside.
-  - NOTE :: the python code is perhaps the oldest and most messy.
+  Julia.
+
+** Files
+   - ~old~ :: Directory of old code
+   - ~src~ :: Directory of code ported to Julia
+* Usage
+  Right now the code is setup as modules in ~src/modules~, you can port the code
+  into your ~Julia~ code with the following commands.
+  #+BEGIN_SRC julia
+    # evalutes the code in the file
+    include("path/to/file.jl")
+
+    # loads the module for direct use
+    using .Module
+  #+END_SRC
