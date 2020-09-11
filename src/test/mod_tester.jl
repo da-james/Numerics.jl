@@ -1,23 +1,25 @@
-include("modules/roots.jl")
-include("modules/interpolate.jl")
-include("modules/linalg.jl")
-include("modules/ode.jl")
-include("modules/approx.jl")
-include("modules/nde.jl")
-include("modules/bvp.jl")
-include("modules/pde.jl")
+path = "../modules/"
 
-include("math151/methods.jl")
-using .Methods
+include(path * "roots.jl")
+include(path * "interpolate.jl")
+include(path * "linalg.jl")
+include(path * "ode.jl")
+include(path * "approx.jl")
+include(path * "nde.jl")
+include(path * "bvp.jl")
+include(path * "pde.jl")
 
-using .Root
-using .Interpolate
-using .LinAlg
-using .ODE
-using .Approximate
-using .NDE
-using .BVP
-using .PDE
+include("../math151/methods.jl")
+import .Methods
+
+import .Root
+import .Interpolate
+import .LinAlg
+import .ODE
+import .Approximate
+import .NDE
+import .BVP
+import .PDE
 
 
 function math151a()
