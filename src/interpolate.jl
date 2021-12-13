@@ -15,6 +15,8 @@ Contains:
 """
 module Interpolate
 
+export nevilles_method
+
 """
     nevilles_method(x0::Real, x::AbstractVector, q::AbstractVector)
 

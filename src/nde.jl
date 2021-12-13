@@ -14,10 +14,10 @@ Contains:
 module NDE
 
 include("linalg.jl")
-
 using .LinAlg
-
 const la = LinAlg
+
+export jacobian, newtons_system
 
 """
     jacobian(f::Function, x0::AbstractVector; ϵ::Float64=1e-10)

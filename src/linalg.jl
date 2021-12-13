@@ -17,6 +17,8 @@ Contains:
 """
 module LinAlg
 
+export gauss_elimination, crout_factorization, gauss_sidel_method, norm
+
 """
     gauss_elimination(a::AbstractMatrix)
 

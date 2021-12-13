@@ -15,6 +15,8 @@ Contains:
 """
 module Root
 
+export biscetion_method, fixed_point, newtons_method, secant_method
+
 """
     bisection_method(f::Function, a::Real, b::Real; tol::Float64=1e-5, N::Int64=50)
 

@@ -15,6 +15,8 @@ Contains:
 """
 module ODE
 
+export rk4_method, rk4_system, trapezoid_method
+
 """
     eulers_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
 

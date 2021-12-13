@@ -15,8 +15,9 @@ module BVP
 include("linalg.jl")
 
 using .LinAlg
-
 const la = LinAlg
+
+export finite_difference
 
 """
     finite_difference(p::Function, q::Function, r::Function, a::Real, b::Real, α::Real, β::Real, N::Int64)
