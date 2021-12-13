@@ -4,19 +4,29 @@
 #+KEYWORDS: python, julia, fortran, math, numerical methods
 
 * Introduction
-  This is a combination of numerical methods coded in Fortran, Python, and
-  Julia.
+  This is a numerical package being design in Julia. The package is meant as a
+  learning/education tool for myself, and more than likely there are more
+  efficient methods in the *LinearAlgebra*, *DifferentialEquations*, or other
+  packages.
 
 ** Files
-   - ~old~ :: Directory of old code
-   - ~src~ :: Directory of code ported to Julia
+   - ~old~ :: Directory of old code to be imported
+   - ~src~ :: Directory of code ported to ~Julia~
 * Usage
-  Right now the code is setup as modules in ~src/modules~, you can port the code
-  into your ~Julia~ code with the following commands.
+  The code can now be imported via github!
   #+BEGIN_SRC julia
     # evalutes the code in the file
-    include("path/to/file.jl")
+    using Pkg
 
     # loads the module for direct use
-    using .Module
+    Pkg.add("https://github.com/da-james/Numerics.jl")
+
+    # import library
+    using Numerics
   #+END_SRC
+
+* Final Notes
+  Documentation is slowly being added and most methods are self taught are
+  learned through textbooks. References to textbooks are commented into source
+  files. Additional methods get added as I continue through my educational
+  career.
