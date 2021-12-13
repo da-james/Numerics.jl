@@ -1,13 +1,5 @@
 module Numerics
 
-include("approx.jl")
-include("bvp.jl")
-include("interpolate.jl")
-include("nde.jl")
-include("ode.jl")
-include("pde.jl")
-include("roots.jl")
-
 export
     finite_difference,
     nevilles_method,
@@ -15,5 +7,13 @@ export
     jacobian, newtons_system,
     rk4_method, rk4_system, trapezoid_method,
     biscetion_method, fixed_point, newtons_method, secant_method
+
+include("approx.jl")
+include("bvp.jl")
+include("interpolate.jl")
+include("nde.jl")
+include("ode.jl")
+include("pde.jl")
+include("roots.jl")
 
 end # module
