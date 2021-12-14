@@ -8,7 +8,7 @@ include("ode.jl")
 include("pde.jl")
 include("roots.jl")
 
-using Approximate, BVP, Interpolate, LinAlg, NDE, ODE, PDE, Roots
+using .Approximate, .BVP, .Interpolate, .LinAlg, .NDE, .ODE, .PDE, .Roots
 
 export
     finite_difference,
