@@ -13,9 +13,7 @@ Contains:
 """
 module NDE
 
-include("linalg.jl")
-using .LinAlg
-const la = LinAlg
+using ..Numerics: gauss_sidel_method, norm
 
 export jacobian, newtons_system
 

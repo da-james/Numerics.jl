@@ -1,27 +1,45 @@
 module Numerics
 
 include("approx.jl")
+using .Approximate
+
 include("bvp.jl")
-include("interpolate.jl")
-include("nde.jl")
-include("ode.jl")
-include("pde.jl")
-include("roots.jl")
-
-using .Approximate, .BVP, .Interpolate, .LinAlg, .NDE, .ODE, .PDE, .Roots
-
+using .BVP
 export
-    finite_difference,
-    nevilles_method,
+    finite_difference
+
+include("interpolate.jl")
+using .Interpolate
+export
+    nevilles_method
+
+include("linalg.jl")
+using .LinAlg
+export
     gauss_elimination,
     crout_factorization,
     gauss_sidel_method,
-    norm,
+    norm
+
+include("nde.jl")
+using .NDE
+export
     jacobian,
-    newtons_system,
+    newtons_system
+
+include("ode.jl")
+using .ODE
+export
     rk4_method,
     rk4_system,
-    trapezoid_method,
+    trapezoid_method
+
+include("pde.jl")
+using .PDE
+
+include("roots.jl")
+using .Roots
+export
     biscetion_method,
     fixed_point,
     newtons_method,
