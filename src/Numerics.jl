@@ -1,6 +1,6 @@
 module Numerics
 
-include("approx.jl")
+include("approximate.jl")
 using .Approximate
 
 include("bvp.jl")
@@ -37,8 +37,8 @@ export
 include("pde.jl")
 using .PDE
 
-include("roots.jl")
-using .Roots
+include("root.jl")
+using .Root
 export
     biscetion_method,
     fixed_point,
