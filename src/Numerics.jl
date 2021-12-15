@@ -38,7 +38,7 @@ include("pde.jl")
 using .PDE
 
 include("root.jl")
-using .Root
+using .Root: biscetion_method
 export
     biscetion_method,
     fixed_point,
