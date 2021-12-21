@@ -1,25 +1,33 @@
 path = "../modules/"
 
-include(path * "roots.jl")
+# include(path * "roots.jl")
 include(path * "interpolate.jl")
-include(path * "linalg.jl")
-include(path * "ode.jl")
-include(path * "approx.jl")
-include(path * "nde.jl")
-include(path * "bvp.jl")
-include(path * "pde.jl")
+# include(path * "linalg.jl")
+# include(path * "ode.jl")
+# include(path * "approx.jl")
+# include(path * "nde.jl")
+# include(path * "bvp.jl")
+# include(path * "pde.jl")
 
-include("../math151/methods.jl")
-import .Methods
+# include("../math151/methods.jl")
+# import .Methods
 
-import .Root
+# import .Root
 import .Interpolate
-import .LinAlg
-import .ODE
-import .Approximate
-import .NDE
-import .BVP
-import .PDE
+# import .LinAlg
+# import .ODE
+# import .Approximate
+# import .NDE
+# import .BVP
+# import .PDE
+
+function main()
+
+    math151a()
+    # math151b()
+    # trans()
+
+end
 
 
 function math151a()
@@ -28,6 +36,11 @@ function math151a()
     # zero = Root.bisection_method(f, -2, -3)
     # sol = Root.fixed_point(f, 1.5)
     # println(sol)
+
+    x0 = log(2.1)
+    x = [2.0, 2.2, 2.3]
+    q = [0.6931, 0.7885, 0.8329]
+    println(Interpolate.nevilles_method(x0, x, q))
 
     # x = 1940:10:1990
     # q = [132165, 151326, 179323, 203302, 226542, 249633]
@@ -60,13 +73,13 @@ function math151a()
     #      0 0 -1 2 1]
     # println(LinAlg.crout_factorization(a))
 
-    a = [10 -1 2 0;
-         -1 11 -1 3;
-         2 -1 10 -1;
-         0 3 -1 8]
-    b = [6, 25, -11, 15]
-    x0 = [0, 0, 0, 0]
-    println(LinAlg.gauss_sidel_method(a,b,x0))
+    # a = [10 -1 2 0;
+    #      -1 11 -1 3;
+    #      2 -1 10 -1;
+    #      0 3 -1 8]
+    # b = [6, 25, -11, 15]
+    # x0 = [0, 0, 0, 0]
+    # println(LinAlg.gauss_sidel_method(a,b,x0))
 end
 
 function math151b()
@@ -125,13 +138,13 @@ function math151b()
     # β = 2
     # display(BVP.finite_difference(p, q, r, a, b, α, β, 9))
 
-    x = (0, 2)
-    y = (0, 1)
-    f(x,y) = x
-    g(x,y) = exp(x)
-    n = 6
-    m = 5
-    display(PDE.poisson_finite_difference(f, g, x, y, m, n))
+    # x = (0, 2)
+    # y = (0, 1)
+    # f(x,y) = x
+    # g(x,y) = exp(x)
+    # n = 6
+    # m = 5
+    # display(PDE.poisson_finite_difference(f, g, x, y, m, n))
 
 end
 
@@ -143,16 +156,16 @@ function trans()
     # println(zero)
     # display(vals)
 
-    df(t, y) = y - t^2 + 1
-    a = 0
-    b = 2
-    y0 = 0.5
-    n = 10
+    # df(t, y) = y - t^2 + 1
+    # a = 0
+    # b = 2
+    # y0 = 0.5
+    # n = 10
     # arr = ODE.eulers_method(df, y0, a, b, n)
     # display(Methods.eulers_method(df, y0, a, b, n))
-    arr = ODE.rk4_method(df, y0, a, b, n)
-    display(Methods.rk4_method(df, y0, a, b, n))
-    display(arr)
+    # arr = ODE.rk4_method(df, y0, a, b, n)
+    # display(Methods.rk4_method(df, y0, a, b, n))
+    # display(arr)
 end
 
-trans()
+main()
