@@ -271,9 +271,13 @@ end
     locate(data::AbstractVector, mark::Real)
 
 Finds the index location of the given `mark` in the vector `data`.
-This function should be used in conjunction with one of the
-interpolation calls to have an `x` to insert into `polint` or other
-scheme in the library.
+If the `mark` is in-between values in `data` then the location given
+is the left bound s.t. `a < mark < b` where `a` is the left bound.
+If the value is not in the then the location given is either the
+minimum or maximum of `data` depending on whether `mark` is larger
+relatively to the elements inside `data`. This function should be
+used in conjunction with one of the interpolation calls to have an `x`
+to insert into `polint` or other scheme in the library.
 """
 function locate(data::AbstractVector, mark::Real)
 
