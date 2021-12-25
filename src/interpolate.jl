@@ -15,7 +15,7 @@ Contains:
 """
 module Interpolate
 
-export nevilles_method
+export polint, ratint, spline, splint, locate
 
 """
     polint(xa::AbstractVector, ya::AbstractVector, x::Real)
@@ -116,13 +116,10 @@ function ratint(xa::AbstractVector, ya::AbstractVector, x::Real)
         h = abs(x - xa[i])
 
         if h == 0
-
             y = ya[i]
             dy = 0
             return (y, dy)
-
         elseif h < hh
-
             ns = i
             hh = h
         end
@@ -155,7 +152,6 @@ function ratint(xa::AbstractVector, ya::AbstractVector, x::Real)
         end
 
         if 2*ns < n - m
-
             dy = c[ns+1]
         else
             dy = d[ns]
@@ -166,9 +162,126 @@ function ratint(xa::AbstractVector, ya::AbstractVector, x::Real)
 
     end
 
-
     return (y, dy)
 end
 
+"""
+    spline(x::AbstractVector, y::AbstractVector, yp1::Real, yp2::Real)
+
+Given arrays `x[1:n]` and `y[1:n]` containing a tabulated function,
+i.e. `yᵢ=f(xᵢ)`, with `x₁<x₂<...<xₙ`, and given `yp1` and `ypn` for
+the first derivative of the interpolating function at points 1 and `n`,
+respectively, this routine returns an array `y2[1:n]` of length `n`
+which contains the second derivatives of the interpolating function
+at the tabulated points `xᵢ`. If `yp1` or `ypn` are equal to 1e30 or
+larger, the routine is signaled to set the corresponding boundary
+condition for a natural spline, with zero second derivative on that
+boundary.
+"""
+function spline(x::AbstractVector, y::AbstractVector, yp1::Real, yp2::Real)
+
+    n = length(x)
+    u = zeros(n)
+    y2 = zeros(n)
+
+    if yp1 > 99e30
+        y2[1] = 0
+        u[1] = 0
+    else
+        y2[1] = -0.5
+        u[1] = (3 / (x[2] - x[1])) * ((y[2] - y[1]) / (x[2] - x[1]) - yp1)
+    end
+
+    for i in 2:n-1
+
+        sig = (x[i] - x[i-1]) / (x[i+1] - x[i-1])
+        p = sig * y2[i-1] + 2
+
+        y2[i] = (sig - 1) / p
+
+        a = (y[i+1] - y[i]) / (x[i+1] - x[i])
+        b = (y[i] - y[i-1]) / (x[i] - x[i-1])
+
+        u[i] = 6*(a - b) / (x[i+1] - x[i-1]) - sig*u[i-1] / p
+
+    end
+
+    if ypn > 99e30
+        qn = 0
+        un = 0
+    else
+        qn = 0.5
+
+        a = 3 / (x[n] - x[n-1])
+        b = (ypn - (y[n] - y[n-1]) / (x[n] - x[n-1]))
+        un = a * b
+    end
+
+    y2[n] = (un - qn*u[n-1]) / (qn*y2[n-1] + 1)
+
+    for i in n-1:-1:1
+
+        y2[i] = y2[i] * y2[i+1] + u[i]
+
+    end
+
+    return y2
+
+end
+
+"""
+    splint(xa::AbstractVector, ya::AbstractVector, y2a::AbstractVector, x::Real)
+
+Given the arrays `xa[1:n]` and `ya[1:n]` of length `n`, which tabulate
+a function (with the xaᵢ's in order), and given the array `y2a[1:n]`,
+which is the output from the `spline` function, and given a value `x`,
+this routine returns a cubic-spline interpolated value `y`
+"""
+function splint(xa::AbstractVector, ya::AbstractVector, y2a::AbstractVector, x::Real)
+
+    n = length(xa)
+
+    klo = 1
+    khi = n
+
+    while khi - klo > 1
+
+        k = (khi + klo) / 2
+        if xa[k] > x
+            khi = k
+        else
+            klo = k
+        end
+
+    end
+
+    h = xa[khi] - xa[klo]
+    # if h == 0 --> exit out
+
+    a = (xa[khi] - x) / h
+    b = (x - xa[klo]) / h
+    c = ((a^3 - a)*y2a[klo] + (b^3 - b)*y2a[khi]) * h^2 / 6
+    y = a*ya[klo] + b*ya[khi] + c
+
+    return y
+
+end
+
+"""
+    locate(data::AbstractVector, mark::Real)
+
+Finds the index location of the given `mark` in the vector `data`.
+This function should be used in conjunction with one of the
+interpolation calls to have an `x` to insert into `polint` or other
+scheme in the library.
+"""
+function locate(data::AbstractVector, mark::Real)
+
+    diff = abs.(data .- mark)
+    val, loc = findmin(diff)
+
+    return loc
+
+end
 
 end # end of module

@@ -2,3 +2,6 @@ name = "Numerics"
 uuid = "c61f3ba2-7cbe-4086-ba11-7e35e9d2fdb0"
 authors = ["David James <davidabraham@ucla.edu>"]
 version = "0.1.0"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"

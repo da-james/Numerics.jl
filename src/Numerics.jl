@@ -11,7 +11,11 @@ export
 include("interpolate.jl")
 using .Interpolate
 export
-    nevilles_method
+    polint,
+    ratint,
+    spline,
+    splint,
+    locate
 
 include("linalg.jl")
 using .LinAlg
@@ -44,5 +48,11 @@ export
     fixed_point,
     newtons_method,
     secant_method
+
+include("util.jl")
+using .Util
+export
+    get_date,
+    logspace
 
 end # module
