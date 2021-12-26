@@ -38,10 +38,10 @@ function polint(xa::AbstractVector, ya::AbstractVector, x::Real)
     # here we find the index ns of the closest table entry
     for i in 1:n
 
-        drift = abs(x - xa[i])
-        if drift < diff
+        dift = abs(x - xa[i])
+        if dift < diff
             ns = i
-            diff = drift
+            diff = dift
         end
 
         # and initialize the tableau of c's and d's
@@ -70,8 +70,8 @@ function polint(xa::AbstractVector, ya::AbstractVector, x::Real)
             den = w / den
 
             # c's and d's get updated
-            c[i] = hp * den
-            d[i] = ho * den
+            c[i] = ho * den
+            d[i] = hp * den
 
         end
 
@@ -82,7 +82,7 @@ function polint(xa::AbstractVector, ya::AbstractVector, x::Real)
             dy = c[ns+1]
         else
             dy = d[ns]
-            ns = ns - 1
+            ns -= 1
         end
 
         y += dy
