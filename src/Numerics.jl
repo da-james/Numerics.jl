@@ -1,4 +1,7 @@
 module Numerics
+# Author: David James, davidabraham@ucla.edu
+# NOTE: each module has references to where the algorithm was
+# gathered or learned
 
 include("approximate.jl")
 using .Approximate
