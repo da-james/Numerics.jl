@@ -62,7 +62,7 @@ at (N + 1) equally spaced numbers in the interval [a,b].
 - `b::Real` : the right-sided endpoint
 - `N:Int64` : the spacing on the interval of [a,b]
 """
-function rk4_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
+function rk4_method(f::Function, α::Real, a::Real, b::Real, p, N::Int64)
 
     n1 = N + 1
     u = zeros(n1,2)
@@ -75,10 +75,10 @@ function rk4_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
         t = u[i-1,1]
         w = u[i-1,2]
 
-        k1 = h * f(t, w)
-        k2 = h * f(t + h / 2, w + k1 / 2)
-        k3 = h * f(t + h / 2, w + k2 / 2)
-        k4 = h * f(t + h, w + k3)
+        k1 = h * f(t, w, p)
+        k2 = h * f(t + h / 2, w + k1 / 2, p)
+        k3 = h * f(t + h / 2, w + k2 / 2, p)
+        k4 = h * f(t + h, w + k3, p)
 
         u[i,2] = w + (k1 + 2 * k2 + 2 * k3 + k4) / 6
         u[i,1] = a + (i - 1) * h
