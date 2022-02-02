@@ -101,7 +101,7 @@ for j = 1, 2, ..., m at (N + 1) equally spaced numbers in the interval [a,b].
 - `b::Real` : the right-sided endpoint
 - `N:Int64` : the spacing on the interval of [a,b]
 """
-function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
+function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, p, N::Int64)
 
     n1 = N + 1
     m = size(α)[1]
