@@ -117,10 +117,10 @@ function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, p, N::Int6
 
         v = u[i-1,2:end]
 
-        k1 = h * f(t, v)
-        k2 = h * f(t + h / 2, v .+ k1 / 2)
-        k3 = h * f(t + h / 2, v .+ k2 / 2)
-        k4 = h * f(t + h, v .+ k3)
+        k1 = h * f(t, v, p)
+        k2 = h * f(t + h / 2, v .+ k1 / 2, p)
+        k3 = h * f(t + h / 2, v .+ k2 / 2, p)
+        k4 = h * f(t + h, v .+ k3, p)
 
         u[i,2:end] = v .+ (k1 .+ 2 .* k2 .+ 2 .* k3 .+ k4) ./ 6
         u[i,1] = a + (i - 1) * h
