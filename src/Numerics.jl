@@ -37,9 +37,9 @@ export
 include("ode.jl")
 using .ODE
 export
-    rk4_method,
-    rk4_system,
-    trapezoid_method
+    eulers,
+    rk4,
+    trapezoid
 
 include("pde.jl")
 using .PDE

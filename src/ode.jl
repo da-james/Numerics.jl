@@ -8,30 +8,31 @@ Notes: algorithms and descriptions come from the following
         by Richard L. Burden et al., Cengage Learning 2016.
 
 Contains:
-- eulers_method
-- rk4_method
-- rk4_system
-- trapezoid_method
+- eulers
+- rk4
+- trapezoid
 """
 module ODE
 
-export rk4_method, rk4_system, trapezoid_method
+export eulers, rk4, trapezoid
 
 """
-    eulers_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
+    eulers(f::Function, α::Real, a::Real, b::Real, N::Int64)
 
 Approximate the solution of the initial-value problem (IVP)
     y' = f(t,y), a <= t <= b, y(a) = α
-at (N + 1) equally spaced numbers in the interval [a,b].
+at (N + 1) equally spaced steps in the interval [a,b].
+NOTE: eulers is meant is a education tool for a more robust
+      solver, refer to the `rk4` method.
 
 # Arguments
 - `f::Function` : the ODE
 - `α::Real` : the initial condition such that y(a) = α
 - `a::Real` : the left-sided endpoint
 - `b::Real` : the right-sided endpoint
-- `N:Int64` : the spacing on the interval of [a,b]
+- `N:Int64` : the number of steps on [a,b]
 """
-function eulers_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
+function eulers(f::Function, α::Real, a::Real, b::Real, N::Int64)
 
     n1 = N + 1
     u = zeros(n1,2)
@@ -49,59 +50,24 @@ function eulers_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
 end
 
 """
-    rk4_method(f::Function, α::Real, a::Real, b::Real, N::Int64)
+    rk4(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
 
-Approximate the solution of the initial-value problem (IVP)
-    y' = f(t,y), a <= t <= b, y(a) = α
-at (N + 1) equally spaced numbers in the interval [a,b].
-
-# Arguments
-- `f::Function` : the ODE
-- `α::Real` : the initial condition such that y(a) = α
-- `a::Real` : the left-sided endpoint
-- `b::Real` : the right-sided endpoint
-- `N:Int64` : the spacing on the interval of [a,b]
-"""
-function rk4_method(f::Function, α::Real, a::Real, b::Real, p, N::Int64)
-
-    n1 = N + 1
-    u = zeros(n1,2)
-
-    h = (b - a) / N
-    u[1,1] = a
-    u[1,2] = α
-
-    for i in 2:n1
-        t = u[i-1,1]
-        w = u[i-1,2]
-
-        k1 = h * f(t, w, p)
-        k2 = h * f(t + h / 2, w + k1 / 2, p)
-        k3 = h * f(t + h / 2, w + k2 / 2, p)
-        k4 = h * f(t + h, w + k3, p)
-
-        u[i,2] = w + (k1 + 2 * k2 + 2 * k3 + k4) / 6
-        u[i,1] = a + (i - 1) * h
-    end
-
-    return u
-end
-
-"""
-    rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
-
-Approximate the solution of the mth-order system of first-order IVP
-    u'_j = f_j(t, u1, u2, ..., u_m), a <= t <= b, with u_j(a) = α_j
-for j = 1, 2, ..., m at (N + 1) equally spaced numbers in the interval [a,b].
+Approximate the solution of the mth-order system of a first-order IVP
+    u'_j = f_j(t, u1, u2, ..., u_m, p), a <= t <= b, with u_j(a) = α_j
+for j = 1, 2, ..., m at (N + 1) equally spaced numbers in the
+interval [a,b]. The `p` argument are any parameter values needed for
+the function.
 
 # Arguments
-- `f::Function` : the system of equations of ODEs
-- `α::Real` : the initial conditions for the system
-- `a::Real` : the left-sided endpoint
-- `b::Real` : the right-sided endpoint
-- `N:Int64` : the spacing on the interval of [a,b]
+- `f::Function`      : the system of equations of ODEs
+- `α::AbstractArray` : the initial conditions for the system
+- `a::Real`          : the left-sided endpoint
+- `b::Real`          : the right-sided endpoint
+- `N:Int64`          : the number of steps on [a,b]
+- `p::AbstractArray` : parameters for `f(t, u, p)`
 """
-function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, p, N::Int64)
+function rk4(f::Function, α::AbstractArray, a::Real, b::Real,
+             N::Int64, p::AbstractArray)
 
     n1 = N + 1
     m = size(α)[1]
@@ -114,7 +80,6 @@ function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, p, N::Int6
 
     for i in 2:n1
         t = u[i-1,1]
-
         v = u[i-1,2:end]
 
         k1 = h * f(t, v, p)
@@ -130,11 +95,15 @@ function rk4_system(f::Function, α::AbstractArray, a::Real, b::Real, p, N::Int6
 end
 
 """
-    trapezoid_method(f::Function, df::Function, α::Real, a::Real, b::Real, N::Int64; tol::Float64=1e-5, M::Int64=10)
+    trapezoid(f::Function, df::Function, α::Real, a::Real, b::Real,
+              N::Int64; tol::Float64=1e-5, M::Int64=10)
 
 Approximate the solution of the stiff initial-value problem (IVP)
     y' = f(t,y), a <= t <= b, y(a) = α
-at (N + 1) equally spaced numbers in the interval [a,b].
+at (N + 1) equally spaced steps in the interval [a,b].
+NOTE: The trapezoid isn't fully implemented to take in parameters
+      or handle system of equations. Refer to the method `rk4` for
+      those needs, but it may be unstable for stiff equations.
 
 # Arguments
 - `f::Function` : the ODE as f(t,y)
@@ -142,9 +111,10 @@ at (N + 1) equally spaced numbers in the interval [a,b].
 - `α::Real` : the initial condition such that y(a) = α
 - `a::Real` : the left-sided endpoint
 - `b::Real` : the right-sided endpoint
-- `N:Int64` : the spacing on the interval of [a,b]
+- `N:Int64` : the number of steps on [a,b]
 """
-function trapezoid_method(f::Function, df::Function, α::Real, a::Real, b::Real, N::Int64; tol::Float64=1e-5, M::Int64=10)
+function trapezoid(f::Function, df::Function, α::Real, a::Real, b::Real,
+                   N::Int64; tol::Float64=1e-5, M::Int64=10)
 
     n1 = N + 1
     u = zeros(n1,2)
