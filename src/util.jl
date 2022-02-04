@@ -37,7 +37,7 @@ end `b`.
 """
 function logspace(a::Real, b::Real, n::Integer)
 
-    return [10^y for y in range(log10(a), log10(b), length=n)]
+    return 10 .^ range(log10(a), log10(b), length=n)
 
 end
 

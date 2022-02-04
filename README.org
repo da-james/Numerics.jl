@@ -1,13 +1,13 @@
 #+AUTHOR: David James
 #+EMAIL: davidabraham@ucla.edu
-#+DESCRIPTION: A library of numerical methods coded in Fortran and Python
+#+DESCRIPTION: A library of numerical methods coded in Julia
 #+KEYWORDS: python, julia, fortran, math, numerical methods
 
 * Introduction
-  This is a numerical package being design in Julia. The package is meant as a
+  This is a numerical package being designed in Julia. The package is meant as a
   learning/education tool for myself, and more than likely there are more
-  efficient methods in the *LinearAlgebra*, *DifferentialEquations*, or other
-  packages.
+  efficient/robust methods in *LinearAlgebra*, *DifferentialEquations*, or
+  other packages.
 
 ** Files
    - ~old~ :: Directory of old code to be imported
@@ -26,7 +26,6 @@
   #+END_SRC
 
 * Final Notes
-  Documentation is slowly being added and most methods are self taught are
-  learned through textbooks. References to textbooks are commented into source
-  files. Additional methods get added as I continue through my educational
-  career.
+  Documentation is slowly being added and most methods are self taught through
+  textbooks. References to textbooks are commented into source files. Additional
+  methods get added as I continue through my educational career.
