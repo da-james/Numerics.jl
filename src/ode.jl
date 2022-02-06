@@ -57,8 +57,8 @@ Approximate the solution of the mth-order system of a first-order IVP
 
     u'ⱼ = fⱼ(t, u₁, u₂, …, uₘ, p), a <= t <= b, with uⱼ(a) = αⱼ
 
-for j = 1, 2, …, m at (N + 1) equally spaced numbers in the
-interval [a,b]. The `p` argument are any parameter values needed for
+for `j = 1, 2, …, m` at `(N + 1)` equally spaced numbers in the
+interval `[a,b]`. The `p` argument are any parameter values needed for
 the function.
 
 # Arguments
