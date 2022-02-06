@@ -51,12 +51,11 @@ end
 
 
 """
-    rk4(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64,
-        p::AbstractArray)
+    rk4(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64, p)
 
 Approximate the solution of the mth-order system of a first-order IVP
 
-    `u'ⱼ = fⱼ(t, u₁, u₂, …, uₘ, p), a <= t <= b, with uⱼ(a) = αⱼ`
+    u'ⱼ = fⱼ(t, u₁, u₂, …, uₘ, p), a <= t <= b, with uⱼ(a) = αⱼ
 
 for j = 1, 2, …, m at (N + 1) equally spaced numbers in the
 interval [a,b]. The `p` argument are any parameter values needed for
