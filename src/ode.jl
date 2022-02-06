@@ -49,12 +49,16 @@ function eulers(f::Function, α::Real, a::Real, b::Real, N::Int64)
     return u
 end
 
+
 """
-    rk4(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64)
+    rk4(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64,
+        p::AbstractArray)
 
 Approximate the solution of the mth-order system of a first-order IVP
-    u'_j = f_j(t, u1, u2, ..., u_m, p), a <= t <= b, with u_j(a) = α_j
-for j = 1, 2, ..., m at (N + 1) equally spaced numbers in the
+
+    `u'ⱼ = fⱼ(t, u₁, u₂, …, uₘ, p), a <= t <= b, with uⱼ(a) = αⱼ`
+
+for j = 1, 2, …, m at (N + 1) equally spaced numbers in the
 interval [a,b]. The `p` argument are any parameter values needed for
 the function.
 
@@ -64,10 +68,10 @@ the function.
 - `a::Real`          : the left-sided endpoint
 - `b::Real`          : the right-sided endpoint
 - `N:Int64`          : the number of steps on [a,b]
-- `p::AbstractArray` : parameters for `f(t, u, p)`
+- `p`                : parameters for `f(t, u, p)`
 """
 function rk4(f::Function, α::AbstractArray, a::Real, b::Real,
-             N::Int64, p::AbstractArray)
+             N::Int64, p)
 
     n1 = N + 1
     m = size(α)[1]
