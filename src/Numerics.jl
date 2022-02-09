@@ -44,7 +44,7 @@ export
 include("pde.jl")
 using .PDE
 
-include("polynomails.jl")
+include("polynomials.jl")
 using .Polynomials
 export
     plgndr
