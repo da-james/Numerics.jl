@@ -44,6 +44,11 @@ export
 include("pde.jl")
 using .PDE
 
+include("polynomails.jl")
+using .Polynomials
+export
+    plgndr
+
 include("root.jl")
 using .Root
 export
