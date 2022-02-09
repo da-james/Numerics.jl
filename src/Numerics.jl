@@ -11,6 +11,16 @@ using .BVP
 export
     finite_difference
 
+include("derivative.jl")
+using .Derivative
+export
+    deriv
+
+include("integration.jl")
+using .Integration
+export
+    gauleg
+
 include("interpolate.jl")
 using .Interpolate
 export

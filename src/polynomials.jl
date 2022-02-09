@@ -3,13 +3,13 @@ module Polynomials
 export plgndr
 
 """
-    plgndr(l::Int, m::Int, x::Real)
+    plgndr(x::Real, l::Int, m::Int)
 
 Computes the associated Legendre polynomail `Pᵐ_l(x)`. Here `m` and
-`l` are integers satisfying 0 ≤ `m` ≤ `l`, while `x` lies in the
-range -1 ≤ `x` ≤ 1.
+`l` are integers satisfying `0 ≤ m ≤ l`, while `x` lies in the
+range `-1 ≤ x ≤ 1`.
 """
-function plgndr(l::Int, m::Int, x::Real)
+function plgndr(x::Real, l::Int, m::Int)
 
     P = 0
 
