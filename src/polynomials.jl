@@ -14,8 +14,10 @@ function plgndr(l::Int, m::Int, x::Real)
     P = 0
 
     if(m < 0 || m > l)
+        println("Improper parameters, 0 ≤ m ≤ l")
         return nothing
     elseif(abs(x) > 1)
+        println("Improper parameters, -1 ≤ x ≤ 1")
         return nothing
     end
 
