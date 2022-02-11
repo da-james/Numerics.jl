@@ -170,12 +170,7 @@ end
 
 Calculate the Euclidean norm of the vector `x`.
 """
-function norm(x::AbstractArray)
-
-    total = sum(x.^2)
-
-    return sqrt(total)
-end
+norm(x::AbstractArray) = sqrt(sum(x.^2))
 
 
 end # end of module

@@ -14,6 +14,8 @@ Contains:
 """
 module ODE
 
+using ..Numerics: norm
+
 export eulers, rk4, trapezoid
 
 """
@@ -96,6 +98,69 @@ function rk4(f::Function, α::AbstractArray, a::Real, b::Real,
 
     return u
 end
+
+"""
+    rkf45(f::Function, α::AbstractArray, a::Real, b::Real,
+          h::Real, h_min::Real, p; tol::Real=1e-6)
+
+Approximate the solution of the mth-order system of a first-order IVP
+
+    u'ⱼ = fⱼ(t, u₁, u₂, …, uₘ, p), a <= t <= b, with uⱼ(a) = αⱼ
+
+for `j = 1, 2, …, m` at `(N + 1)` equally spaced numbers in the
+interval `[a,b]`. The `p` argument are any parameter values needed for
+the function.
+
+# Arguments
+- `f::Function`      : the system of equations of ODEs
+- `α::AbstractArray` : the initial conditions for the system
+- `a::Real`          : the left-sided endpoint
+- `b::Real`          : the right-sided endpoint
+- `N:Int64`          : the number of steps on [a,b]
+- `p`                : parameters for `f(t, u, p)`
+"""
+function rkf45(f::Function, α::AbstractArray, a::Real, b::Real,
+               h::Real, h_min::Real, p; tol::Real=1e-6)
+
+    l = length(α)
+    u = zeros(1, l + 1)
+
+    u[1,1] = a
+    u[1,2:end] = α
+
+    t_k = a
+    y_k = α
+
+    while t_k <= b
+
+        k1 = h*f(t_k, y_k)
+        k2 = h*f(t_k + 1/4*h  , y_k .+ 1/4*k1)
+        k3 = h*f(t_k + 3/8*h  , y_k .+ 3/32*k1      .+ 9/32*k2)
+        k4 = h*f(t_k + 12/13*h, y_k .+ 1932/2197*k1 .- 7200/2197*k2 .+ 7296/2197*k3)
+        k5 = h*f(t_k + h      , y_k .+ 439/216*k1   .- 8*k2         .+ 3680/513*k3  .- 845/4104*k4)
+        k6 = h*f(t_k + 1/2*h  , y_k .- 8/27*k1      .+ 2*k2         .- 3544/2565*k3 .+ 1859/4104*k4 .- 11/40*k5)
+
+        y_k1 = y_k .+ 25/216*k1 .+ 1408/2565*k3  .+ 2197/4101*k4   .- 1/5*k5
+        z_k1 = y_k .+ 16/135*k1 .+ 6656/12825*k3 .+ 28561/56430*k4 .- 9/50*k5 .+ 2/55*k6
+
+        R = 1/4 * norm(z_k1 .- y_k1)
+
+        if(R <= tol)
+            t_k += h
+            y_k = y_k1
+            v_k = vcat([t], y_k)
+            u = vcat(u, v_k)
+        else
+            δ = (tol / (2*R))^(1/4)
+            h *= δ
+            if(h < h_min) h = h_min end
+        end
+    end
+
+    return u
+
+end
+
 
 """
     trapezoid(f::Function, df::Function, α::Real, a::Real, b::Real,
