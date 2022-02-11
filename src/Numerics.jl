@@ -49,6 +49,7 @@ using .ODE
 export
     eulers,
     rk4,
+    rkf45,
     trapezoid
 
 include("pde.jl")

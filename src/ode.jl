@@ -6,17 +6,12 @@ Date: 20200829
 Notes: algorithms and descriptions come from the following
     "Chapter 5: Initial-Value Problems for ODEs." Numerical Analysis,
         by Richard L. Burden et al., Cengage Learning 2016.
-
-Contains:
-- eulers
-- rk4
-- trapezoid
 """
 module ODE
 
 using ..Numerics: norm
 
-export eulers, rk4, trapezoid
+export eulers, rk4, rkf45, trapezoid
 
 """
     eulers(f::Function, α::Real, a::Real, b::Real, N::Int64)
