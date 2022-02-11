@@ -143,7 +143,7 @@ function rkf45(f::Function, α::AbstractArray, a::Real, b::Real,
         if(R <= tol)
             t_k += h
             y_k = y_k1
-            v_k = vcat([t_k], y_k)
+            v_k = vcat([t_k], [y_k])
             u = vcat(u, v_k)
         else
             δ = (tol / (2*R))^(1/4)
