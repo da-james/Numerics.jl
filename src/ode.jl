@@ -20,7 +20,7 @@ Approximate the solution of the initial-value problem (IVP)
     y' = f(t,y), a <= t <= b, y(a) = α
 at (N + 1) equally spaced steps in the interval [a,b].
 NOTE: eulers is meant is a education tool for a more robust
-      solver, refer to the `rk4` method.
+      solver, refer to the `rk4` or `rkf45` method.
 
 # Arguments
 - `f::Function` : the ODE
@@ -48,7 +48,7 @@ end
 
 
 """
-    rk4(f::Function, α::AbstractArray, a::Real, b::Real, N::Int64, p)
+    rk4(f::Function, α::AbstractArray, t0::Tuple, N::Int64; p=0)
 
 Approximate the solution of the mth-order system of a first-order IVP
 
@@ -61,13 +61,14 @@ the function.
 # Arguments
 - `f::Function`      : the system of equations of ODEs
 - `α::AbstractArray` : the initial conditions for the system
-- `a::Real`          : the left-sided endpoint
-- `b::Real`          : the right-sided endpoint
+- `t::Tuple`         : the end-points `[a,b]`
 - `N:Int64`          : the number of steps on [a,b]
-- `p`                : parameters for `f(t, u, p)`
+- `p=0`              : parameters for `f(t, u, p)`
 """
-function rk4(f::Function, α::AbstractArray, a::Real, b::Real,
-             N::Int64, p)
+function rk4(f::Function, α::AbstractArray, t0::Tuple, N::Int64; p=0)
+
+    a = t0[1]
+    b = t0[2]
 
     n1 = N + 1
     m = size(α)[1]
@@ -95,27 +96,31 @@ function rk4(f::Function, α::AbstractArray, a::Real, b::Real,
 end
 
 """
-    rkf45(f::Function, α::AbstractArray, a::Real, b::Real,
-          h::Real, h_min::Real, p; tol::Real=1e-6)
+    rkf45(f::Function, α::AbstractArray, t::Tuple, h::Real,
+          h_min::Real; p=0, tol::Real=1e-6)
 
 Approximate the solution of the mth-order system of a first-order IVP
 
     u'ⱼ = fⱼ(t, u₁, u₂, …, uₘ, p), a <= t <= b, with uⱼ(a) = αⱼ
 
-for `j = 1, 2, …, m` at `(N + 1)` equally spaced numbers in the
-interval `[a,b]`. The `p` argument are any parameter values needed for
-the function.
+for the interval `[a,b]`. Where the step-size adapts based on the
+`tol` and `h_min`. The `p` argument are any parameter values needed
+for the function.
 
 # Arguments
 - `f::Function`      : the system of equations of ODEs
 - `α::AbstractArray` : the initial conditions for the system
-- `a::Real`          : the left-sided endpoint
-- `b::Real`          : the right-sided endpoint
-- `N:Int64`          : the number of steps on [a,b]
-- `p`                : parameters for `f(t, u, p)`
+- `t::Tuple`         : the end-points `[a,b]`
+- `h::Real`          : initial guess step-size
+- `h_min::Real`      : minimum step-size to take when adapting
+- `p=0`              : parameters for `f(t, u, p)`
+- `tol=1e-6`         : relative tolerance for solver
 """
-function rkf45(f::Function, α::AbstractArray, a::Real, b::Real,
-               h::Real, h_min::Real, p; tol::Real=1e-6)
+function rkf45(f::Function, α::AbstractArray, t::Tuple, h::Real,
+               h_min::Real; p=0, tol::Real=1e-6)
+
+    a = t[1]
+    b = t[2]
 
     l = length(α)
     u = zeros(1, l + 1)
