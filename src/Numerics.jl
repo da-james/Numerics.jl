@@ -66,7 +66,9 @@ export
     bisection_method,
     fixed_point,
     newtons_method,
-    secant_method
+    secant_method,
+    zbrac,
+    zbrak
 
 include("util.jl")
 using .Util
