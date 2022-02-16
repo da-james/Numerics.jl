@@ -174,4 +174,55 @@ function secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::In
     return nothing
 end
 
+function zbrac(f::Function, x1::Real, x2::Real)
+    const FACTOR = 1.6
+    const NTRY = 50
+
+    f1 = f(x1)
+    f2 = f(x2)
+
+    for i in 1:NTRY
+        if(f1*f2 < 0) return true end
+        if(abs(f1) < abs(f2))
+            x1 += FACTOR*(x1 - x2)
+            f1 = f(x1)
+        else
+            x2 += FACTOR*(x2 - x1)
+            f2 = f(x2)
+        end
+    end
+
+    return false
+end
+
+function zbrak(f::Function, x1::Real, x2::Real, nb::Int; n::Int=100)
+
+    xb = zeros(nb, 2)
+    nbb = 0
+    x = x1
+
+    # determine spacing for mesh
+    dx = (x2 - x1) / n
+    fx = f(x)
+
+    # loop over all intervals
+    for i in 1:n
+        x += dx
+
+        fc = f(x)
+
+        if(fc*fx < 0)
+            nbb += 1
+            xb[nbb,1] = x - dx
+            xb[nbb,2] = x
+
+            if(nbb == nb) break end
+        end
+        fx = fc
+    end
+
+    return xb
+end
+
+
 end # end of module
