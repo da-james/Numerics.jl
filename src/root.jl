@@ -175,8 +175,9 @@ function secant_method(f::Function, p0::Real, p1::Real; tol::Float64=1e-5, N::In
 end
 
 function zbrac(f::Function, x1::Real, x2::Real)
-    const FACTOR = 1.6
-    const NTRY = 50
+    # parameters
+    FACTOR = 1.6
+    NTRY = 50
 
     f1 = f(x1)
     f2 = f(x2)
