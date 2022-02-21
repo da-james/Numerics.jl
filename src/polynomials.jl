@@ -71,7 +71,8 @@ on the surface of a sphere.
 """
 function psphrc(θ::Real, ϕ::Real, l::Int, m::Int)::Number
 
-    c = sqrt((2l + 1)/(4π) * factorial(l - m)/factorial(l + m))
+    fact = factorial(big(l - m)) / factorial(big(l + m))
+    c = sqrt((2l + 1)/(4π) * fact)
 
     x = cos(θ)
     Y = c * plgndr(x, l, m) * exp(m*ϕ * im)
