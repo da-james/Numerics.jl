@@ -58,7 +58,8 @@ using .PDE
 include("polynomials.jl")
 using .Polynomials
 export
-    plgndr
+    plgndr,
+    psphrc
 
 include("root.jl")
 using .Root

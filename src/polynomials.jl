@@ -1,15 +1,15 @@
 module Polynomials
 
-export plgndr
+export plgndr, psphrc
 
 """
-    plgndr(x::Real, l::Int, m::Int)
+    plgndr(x::Real, l::Int, m::Int)::Real
 
-Computes the associated Legendre polynomail `Pᵐ_l(x)`. Here `m` and
+Computes the associated Legendre polynomial `Pᵐ_l(x)`. Here `m` and
 `l` are integers satisfying `0 ≤ m ≤ l`, while `x` lies in the
 range `-1 ≤ x ≤ 1`.
 """
-function plgndr(x::Real, l::Int, m::Int)
+function plgndr(x::Real, l::Int, m::Int)::Real
 
     P = 0
 
@@ -60,6 +60,27 @@ function plgndr(x::Real, l::Int, m::Int)
 
     return P
 
+end
+
+"""
+    psphrc(x::Real, l::Int, m::Int)::Number
+
+Computes the associated Spherical Harmonic `Yᵐ_l(θ,ϕ)`. Here `m` and
+`l` are integers satisfying `0 ≤ m ≤ l`. While (θ,ϕ) are coordinates
+on the surface of a sphere.
+"""
+function psphrc(θ, ϕ, l, m)::Number
+
+    c = sqrt((2l + 1)/(4π) * factorial(l - m)/factorial(l + m))
+
+    x = cos(θ)
+    Y = c * plgndr(x, l, m) * exp(m*ϕ * im)
+
+    if(ϕ == 0)
+        return real(Y)
+    else
+        return Y
+    end
 end
 
 end # module
