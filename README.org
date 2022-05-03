@@ -9,9 +9,6 @@
   efficient/robust methods in *LinearAlgebra*, *DifferentialEquations*, or
   other packages.
 
-** Files
-   - ~old~ :: Directory of old code to be imported
-   - ~src~ :: Directory of code ported to ~Julia~
 * Usage
   The code can now be imported via github!
   #+BEGIN_SRC julia
