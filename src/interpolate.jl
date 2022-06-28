@@ -2,12 +2,13 @@
     Interpolate
 
 Author: David James, davidabraham@ucla.edu
-Date: 20211221
+Date: 20220627
 Notes: algorithms and descriptions come from the following
     "Chapter 3: Interpolation and Extrapolation" Numerical Recipes in
     FORTRAN 77 by Press W. H. et al.
 
 Contains:
+- interpolate
 - polint
 - ratint
 - spline
@@ -15,7 +16,31 @@ Contains:
 """
 module Interpolate
 
-export polint, ratint, spline, splint, locate
+export interpolate, polint, ratint, spline, splint, locate
+
+"""
+    interpolate(xa::AbstractVector, ya::AbstractVector, x::Real; k::Int=2)
+
+Wrapper for `polint` function. This locates the index of the wanted `x` in `xa`
+and interpolates the `ya` based on the desired degree, `k`, of interpolation.
+For more information refer to `polint` and/or `locate` for the operations
+performed.
+"""
+function interpolate(xa::AbstractVector, ya::AbstractVector, x::Real; k::Int=2)
+
+    i = locate(xa, x)
+
+    if i == 1
+        y, dy = polint(xa[i:i+k], ya[i:i+k], x)
+    elseif i == length(xa)
+        y, dy = polint(xa[i-k:i], ya[i-k:i], x)
+    else
+        l = k-1
+        y, dy = polint(xa[i-l:i+l], ya[i-l:i+l], x)
+    end
+
+    return (y, dy)
+end
 
 """
     polint(xa::AbstractVector, ya::AbstractVector, x::Real)

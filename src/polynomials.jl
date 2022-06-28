@@ -2,6 +2,18 @@ module Polynomials
 
 export plgndr, psphrc
 
+function polyfn(x::Real, c::AbstractVector)
+
+    l = length(c)
+    p = c[l]
+    for i in l-1:-1:1
+        p = p*x + c[i]
+    end
+
+    return p
+end
+
+
 """
     plgndr(x::Real, l::Int, m::Int)::Real
 
