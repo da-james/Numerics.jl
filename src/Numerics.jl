@@ -72,8 +72,8 @@ export
     zbrac,
     zbrak
 
-include("converstions.jl")
-using .Conversionts
+include("conversions.jl")
+using .Conversions
 export
     bar_to_Pa,
     GPa_to_Pa,
