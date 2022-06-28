@@ -32,7 +32,7 @@ function interpolate(xa::AbstractVector, ya::AbstractVector, x::Real; k::Int=2)
 
     if(i == 1)
         y, dy = polint(xa[i:i+k], ya[i:i+k], x)
-    elseif(i == length(xa) || i == length(xa) - k + 1)
+    elseif(i == length(xa)
         y, dy = polint(xa[i-k:i], ya[i-k:i], x)
     else
         l = k - 1
