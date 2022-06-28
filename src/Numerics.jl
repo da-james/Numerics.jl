@@ -24,6 +24,7 @@ export
 include("interpolate.jl")
 using .Interpolate
 export
+    interpolate,
     polint,
     ratint,
     spline,
