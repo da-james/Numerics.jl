@@ -1,0 +1,14 @@
+module Conversions
+
+export bar_to_Pa, GPa_to_Pa, kbar_to_GPa, kbar_to_GPa, kbar_to_MPa, eV_to_J,
+    A_to_m, Gyr_to_sec
+
+const bar_to_Pa = 1e5
+const GPa_to_Pa = 1e9
+const kbar_to_GPa = 0.1
+const kbar_to_MPa = 100
+const eV_to_J = 1.602176565e-19
+const A_to_m = 1e-10
+const Gyr_to_sec = 1e9 * 365 * 24 * 60 * 60
+
+end # module

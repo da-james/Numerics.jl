@@ -72,6 +72,18 @@ export
     zbrac,
     zbrak
 
+include("converstions.jl")
+using .Conversionts
+export
+    bar_to_Pa,
+    GPa_to_Pa,
+    kbar_to_GPa,
+    kbar_to_GPa,
+    kbar_to_MPa,
+    eV_to_J,
+    A_to_m,
+    Gyr_to_sec
+
 include("util.jl")
 using .Util
 export
