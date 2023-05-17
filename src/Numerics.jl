@@ -80,6 +80,7 @@ export
     kbar_to_GPa,
     kbar_to_MPa,
     eV_to_J,
+    Ry_to_eV,
     A_to_m,
     Bohr_to_A,
     Gyr_to_sec
