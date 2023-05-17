@@ -9,6 +9,7 @@ const kbar_to_GPa = 0.1
 const kbar_to_MPa = 100
 const eV_to_J = 1.602176565e-19
 const A_to_m = 1e-10
+const Bohr_to_A = 0.52918
 const Gyr_to_sec = 1e9 * 365 * 24 * 60 * 60
 
 end # module
