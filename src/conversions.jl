@@ -1,6 +1,6 @@
 module Conversions
 
-export bar_to_Pa, GPa_to_Pa, kbar_to_GPa, kbar_to_MPa
+export bar_to_Pa, GPa_to_Pa, kbar_to_GPa, kbar_to_MPa, Bohr_to_A
 export eV_to_J, A_to_m, Gyr_to_sec
 
 const bar_to_Pa = 1e5

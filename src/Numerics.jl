@@ -81,6 +81,7 @@ export
     kbar_to_MPa,
     eV_to_J,
     A_to_m,
+    Bohr_to_A,
     Gyr_to_sec
 
 include("util.jl")
