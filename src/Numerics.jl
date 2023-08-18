@@ -26,6 +26,7 @@ using .Interpolate
 export
     interpolate,
     polint,
+    polin2,
     ratint,
     spline,
     splint,

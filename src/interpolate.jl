@@ -16,7 +16,7 @@ Contains:
 """
 module Interpolate
 
-export interpolate, polint, ratint, spline, splint, locate
+export interpolate, polint, polin2, ratint, spline, splint, locate
 
 """
     interpolate(xa::AbstractVector, ya::AbstractVector, x::Real; k::Int=2)
@@ -113,6 +113,40 @@ function polint(xa::AbstractVector, ya::AbstractVector, x::Real)
         y += dy
 
     end
+
+    return (y, dy)
+end
+
+"""
+    polin2(x1a::AbstractVector, x2a::AbstractVector, ya::AbstractMatrix,
+           x1::Real, x2::Real; k::Int=2)
+
+Multi-dimensional interpolation function that uses the `interpolate` function to
+interpolate a `y` value based on the `ya` grid.
+"""
+function polin2(x1a::AbstractVector, x2a::AbstractVector, ya::AbstractMatrix,
+                x1::Real, x2::Real; k::Int=2)
+
+    m = length(x1a)
+    n = length(x2a)
+
+    ym_tmp = zeros(m)
+    yn_tmp = zeros(n)
+
+    # looping over grid
+    for i in 1:m
+        for j in 1:n
+            # copy the row into temporary storage
+            yn_tmp[j] = ya[i,j]
+        end
+
+        # interpolate answer into temporary storage
+        y, dy = interpolate(x2a, yn_tmp, x2, k)
+        ym_tmp[i] = y
+    end
+
+    # do the final interpolate
+    y, dy = interpolate(x1a, ym_tmp, x1, k)
 
     return (y, dy)
 end
