@@ -141,12 +141,12 @@ function polin2(x1a::AbstractVector, x2a::AbstractVector, ya::AbstractMatrix,
         end
 
         # interpolate answer into temporary storage
-        y, dy = interpolate(x2a, yn_tmp, x2, k)
+        y, dy = interpolate(x2a, yn_tmp, x2, k=2)
         ym_tmp[i] = y
     end
 
     # do the final interpolate
-    y, dy = interpolate(x1a, ym_tmp, x1, k)
+    y, dy = interpolate(x1a, ym_tmp, x1, k=2)
 
     return (y, dy)
 end
