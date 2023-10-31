@@ -1,6 +1,42 @@
 module Integration
 
-export gauleg
+export trapzd, simpsn, gauleg
+
+"""
+    trapzd(f::Function, x1::Real, x2::Real, n::Int)
+
+Integration method using the trapezoidal rule.
+"""
+function trapzd(f::Function, x1::Real, x2::Real, n::Int)
+
+    h = (x2 - x1) / n
+
+    sum = 0
+    for i in 1:n
+        sum += h/2 * (f(x1) + f(x2))
+    end
+
+    return sum
+end
+
+"""
+    simpsn(f::Function, x1::Real, x2::Real, n::Int)
+
+Integration method using Simpson's rule.
+"""
+function simpsn(f::Function, x1::Real, x2::Real, n::Int)
+
+    h = (x2 - x1) / n
+    xh = x1 + h
+
+    sum = 0
+    for i in 1:n
+        sum += h/3 * (f(x1) + 4*f(xh) + f(x2))
+    end
+
+    return sum
+end
+
 
 """
     gauleg(x1::Real, x2::Real, n::Int, reltol::Real=3e-14)

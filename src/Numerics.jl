@@ -19,6 +19,8 @@ export
 include("integration.jl")
 using .Integration
 export
+    trapzd,
+    simpsn,
     gauleg
 
 include("interpolate.jl")
