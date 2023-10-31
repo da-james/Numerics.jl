@@ -1,6 +1,6 @@
 module Integration
 
-export gauleg
+export trapzd, simpsn, gauleg
 
 """
     trapzd(f::Function, x1::Real, x2::Real, n::Int)
