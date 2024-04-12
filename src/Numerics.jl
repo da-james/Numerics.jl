@@ -85,7 +85,7 @@ export
     eV_to_J,
     Ry_to_eV,
     A_to_m,
-    Bohr_to_A,
+    A_to_Bohr,
     Gyr_to_sec
 
 include("util.jl")
