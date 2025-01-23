@@ -11,6 +11,19 @@ using .BVP
 export
     finite_difference
 
+include("conversions.jl")
+using .Conversions
+export
+    bar_to_Pa,
+    GPa_to_Pa,
+    kbar_to_GPa,
+    kbar_to_MPa,
+    eV_to_J,
+    Ry_to_eV,
+    A_to_m,
+    A_to_Bohr,
+    Gyr_to_sec
+
 include("derivative.jl")
 using .Derivative
 export
@@ -56,6 +69,13 @@ export
     rkf45,
     trapezoid
 
+include("optimization.jl")
+using .Optimize
+export
+    golden_section_search,
+    brent_method,
+    powell_method
+
 include("pde.jl")
 using .PDE
 
@@ -74,19 +94,6 @@ export
     secant_method,
     zbrac,
     zbrak
-
-include("conversions.jl")
-using .Conversions
-export
-    bar_to_Pa,
-    GPa_to_Pa,
-    kbar_to_GPa,
-    kbar_to_MPa,
-    eV_to_J,
-    Ry_to_eV,
-    A_to_m,
-    A_to_Bohr,
-    Gyr_to_sec
 
 include("util.jl")
 using .Util

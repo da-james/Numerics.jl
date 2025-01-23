@@ -1,0 +1,162 @@
+I have an implementation of Powell's Method in Julia in the block of code below:
+=====
+module Optimize
+
+using LinearAlgebra
+
+# Golden section constants
+const PHI = (1 + √5) / 2
+const RESPHI = 2 - PHI  # 1/phi
+
+"""
+    brent_method(f, a, b; tol=1e-5)
+
+Finds the minimum of `f` in the interval `[a, b]` using Brent's method.
+"""
+function brent_method(f, a, b; tol=1e-5)
+    golden_ratio = PHI - 1
+    x = w = v = (a + b) / 2
+    fx = fw = fv = f(x)
+    d = e = b - a
+
+    while abs(b - a) > tol
+        g = e
+        e = d
+        u = nothing
+
+        # Attempt parabolic fit
+        if x != w && x != v && w != v
+            u = x - ((x - w)^2 * (fx - fv) - (x - v)^2 * (fx - fw)) /
+                  (2 * ((x - w) * (fx - fv) - (x - v) * (fx - fw)))
+            if a + tol <= u <= b - tol && abs(u - x) < g / 2
+                d = abs(u - x)
+            else
+                u = nothing
+            end
+        end
+
+        if u === nothing
+            if x < (a + b) / 2
+                u = x + golden_ratio * (b - x)
+                d = b - x
+            else
+                u = x - golden_ratio * (x - a)
+                d = x - a
+            end
+        end
+
+        fu = f(u)
+        if fu <= fx
+            if u < x
+                b = x
+            else
+                a = x
+            end
+            v, fv = w, fw
+            w, fw = x, fx
+            x, fx = u, fu
+        else
+            if u < x
+                a = u
+            else
+                b = u
+            end
+            if fu <= fw || w == x
+                v, fv = w, fw
+                w, fw = u, fu
+            elseif fu <= fv || v == x || v == w
+                v, fv = u, fu
+            end
+        end
+    end
+
+    return x
+end
+
+"""
+    powell_method(f, x0; tol=1e-5, max_iters=100)
+
+Performs Powell's method for multidimensional minimization of `f` starting at `x0`.
+"""
+function powell_method(f, x0; tol=1e-6, max_iters=100)
+    n = length(x0)
+    # Identity matrix as initial directions
+    directions = [i == j ? 1.0 : 0.0 for i in 1:n, j in 1:n]
+    x = copy(x0)
+    fx = f(x)
+
+    for iter in 1:max_iters
+        x_start = copy(x)
+        fx_start = fx
+
+        # Iterate through all directions
+        for i in 1:n
+            direction = directions[:, i]
+
+            # Dynamic line search range
+            f_line = α -> f(x + α * direction)
+            α_min = brent_method(f_line, -10.0, 10.0; tol=tol)
+            x .= x + α_min * direction
+            fx = f(x)
+        end
+
+        # Check for convergence
+        if norm(x - x_start) / max(norm(x_start), tol) < tol &&
+           abs(fx - fx_start) / max(abs(fx_start), tol) < tol
+            println("Converged at iteration $iter with x = $x, f(x) = $fx")
+            return x, fx
+        end
+
+        # Update directions using new composite direction
+        new_direction = x - x_start
+        if norm(new_direction) > tol
+            new_direction ./= norm(new_direction)  # Normalize
+        else
+            new_direction .= directions[:, end]  # Use last direction
+        end
+
+        # Shift and rescale directions
+        directions[:, 1:end-1] .= directions[:, 2:end]
+        directions[:, end] = new_direction
+        for i in 1:n
+            directions[:, i] ./= norm(directions[:, i])  # Normalize directions
+        end
+    end
+
+    println("Maximum iterations reached. Current minimum at x = $x, f(x) = $fx")
+    return x, fx
+end
+
+
+end  # module
+
+
+
+=====
+
+I also have links to an implementation of Powell's Method done in C from the
+Numerical Recipes 2nd Ed. Book:
+https://www.astro.umd.edu/~ricotti/NEWWEB/teaching/ASTR415/InClassExamples/NR3/code/mins.h
+https://www.astro.umd.edu/~ricotti/NEWWEB/teaching/ASTR415/InClassExamples/NR3/code/mins_ndim.h
+
+
+The following test case:
+
+function hartmann(x)
+    return -((1.1 - 3*x[1] + x[1]^2)^2 + (1.1 - 3*x[2] + x[2]^2)^2)
+end
+
+produces the following output with a x0 = [0.5, 0.5]:
+
+====
+julia> Numerics.Optimize.powell_method(hartmann, [0.5, 0.5])
+Maximum iterations reached. Current minimum at x = [-997.0222551459991,
+-1723.0633373183884], f(x) = -9.839475044379314e12
+([-997.0222551459991, -1723.0633373183884], -9.839475044379314e12)
+====
+
+where the true minimum is at [1.5, 1.5]. Note that this still fails with a
+higher tolerance, increased iterations, or shifted x0 closer to the minimum.
+Compare my implementation for any bugs or errors between my implementation and
+the Numerical Recipes and check if this is this an error or is Powell's method
+failing to converge on this test case?
