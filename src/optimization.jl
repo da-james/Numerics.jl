@@ -1,7 +1,6 @@
 module Optimize
 
-# using ..Numerics: norm
-using LinearAlgebra
+using ..Numerics: norm
 
 export golden_section_serach, brent_method, powell_method
 
