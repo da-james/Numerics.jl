@@ -128,14 +128,23 @@ function brent_method(f, a, b; tol=1e-5)
 end
 
 """
-    powell_method(f, x0; tol=1e-5, max_iters=100)
+    powell_method(f, x0; directions=nothing, tol=1e-6, max_iters=100)
 
 Performs Powell's method for multidimensional minimization of `f` starting at `x0`.
+If `directions` is not provided, the identity matrix is used as the initial directions.
 """
-function powell_method(f, x0; tol=1e-6, max_iters=100)
+function powell_method(f, x0; directions=nothing, tol=1e-6, max_iters=100)
     n = length(x0)
-    # Identity matrix as initial directions
-    directions = [i == j ? 1.0 : 0.0 for i in 1:n, j in 1:n]
+    # Use provided directions or default to identity matrix
+    if directions === nothing
+        directions = [i == j ? 1.0 : 0.0 for i in 1:n, j in 1:n]
+    else
+        # Ensure the provided directions matrix has the correct dimensions
+        if size(directions) != (n, n)
+            error("Provided directions must be an $n x $n matrix.")
+        end
+    end
+
     x = copy(x0)
     fx = f(x)
 
