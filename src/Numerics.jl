@@ -27,7 +27,8 @@ export
 include("derivative.jl")
 using .Derivative
 export
-    deriv
+    deriv,
+    ln_deriv
 
 include("integration.jl")
 using .Integration
